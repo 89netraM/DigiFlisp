@@ -10,9 +10,9 @@ namespace Model.UnitTests.Components
 		[TestMethod]
 		public void ShouldStartAsFalse()
 		{
-			Component andGate = new OrGate("testId", 2);
+			Component orGate = new OrGate("testId", 2);
 
-			Assert.IsFalse(andGate.OutputSignals[0].Value);
+			Assert.IsFalse(orGate.OutputSignals[0].Value);
 		}
 
 		[TestMethod]
@@ -22,11 +22,11 @@ namespace Model.UnitTests.Components
 
 			Signal b = new Signal("testB", 0);
 
-			Component andGate = new OrGate("testId", 2);
-			andGate.SetInput(0, a);
-			andGate.SetInput(1, b);
+			Component orGate = new OrGate("testId", 2);
+			orGate.SetInput(0, a);
+			orGate.SetInput(1, b);
 
-			Assert.IsFalse(andGate.OutputSignals[0].Value);
+			Assert.IsFalse(orGate.OutputSignals[0].Value);
 		}
 
 		[TestMethod]
@@ -37,11 +37,11 @@ namespace Model.UnitTests.Components
 
 			Signal b = new Signal("testB", 0);
 
-			Component andGate = new OrGate("testId", 2);
-			andGate.SetInput(0, a);
-			andGate.SetInput(1, b);
+			Component orGate = new OrGate("testId", 2);
+			orGate.SetInput(0, a);
+			orGate.SetInput(1, b);
 
-			Assert.IsTrue(andGate.OutputSignals[0].Value);
+			Assert.IsTrue(orGate.OutputSignals[0].Value);
 		}
 
 		[TestMethod]
@@ -53,11 +53,11 @@ namespace Model.UnitTests.Components
 			Signal b = new Signal("testB", 0);
 			b.Update(true);
 
-			Component andGate = new OrGate("testId", 2);
-			andGate.SetInput(0, a);
-			andGate.SetInput(1, b);
+			Component orGate = new OrGate("testId", 2);
+			orGate.SetInput(0, a);
+			orGate.SetInput(1, b);
 
-			Assert.IsTrue(andGate.OutputSignals[0].Value);
+			Assert.IsTrue(orGate.OutputSignals[0].Value);
 		}
 
 		[TestMethod]
@@ -68,11 +68,11 @@ namespace Model.UnitTests.Components
 			Signal b = new Signal("testB", 0);
 			a.Update(true);
 
-			Component andGate = new OrGate("testId", 2);
-			andGate.SetInput(0, a);
-			andGate.SetInput(1, b);
+			Component orGate = new OrGate("testId", 2);
+			orGate.SetInput(0, a);
+			orGate.SetInput(1, b);
 
-			Assert.IsTrue(andGate.OutputSignals[0].Value);
+			Assert.IsTrue(orGate.OutputSignals[0].Value);
 		}
 	}
 }
