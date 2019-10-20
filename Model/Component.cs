@@ -9,6 +9,8 @@ namespace Model
 		public string Id { get; }
 		public string TypeId { get; }
 
+		public Position Position { get; } = new Position();
+
 		private readonly Signal[] inputSignals;
 		private readonly Signal[] outputSignals;
 
