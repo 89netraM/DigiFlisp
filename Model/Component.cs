@@ -19,6 +19,8 @@ namespace Model
 
 			inputSignals = new Signal[inputSize];
 			outputSignals = (new Signal[outputSize]).Select((ignored, index) => new Signal(Id, index)).ToArray();
+
+			Update(Guid.NewGuid().ToString());
 		}
 
 		public void SetInput(int index, Signal input)
@@ -42,14 +44,19 @@ namespace Model
 			}
 		}
 
-		public IReadOnlyCollection<Signal> GetInputSignals()
+		public IReadOnlyList<Signal> GetInputSignals()
 		{
 			return inputSignals;
 		}
 
+		public IReadOnlyList<Signal> GetOutputSignals()
+		{
+			return outputSignals;
+		}
+
 		protected void Update(string updateId)
 		{
-			IEnumerable<bool> outputValues = Logic(inputSignals.Select(x => x.Value));
+			IEnumerable<bool> outputValues = Logic(inputSignals.Select(x => x?.Value ?? false));
 
 			if (outputValues.Count() != outputSignals.Length)
 			{
