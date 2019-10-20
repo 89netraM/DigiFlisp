@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Model
 {
@@ -18,7 +17,12 @@ namespace Model
 			TypeId = typeId;
 
 			inputSignals = new Signal[inputSize];
-			outputSignals = (new Signal[outputSize]).Select((ignored, index) => new Signal(Id, index)).ToArray();
+			outputSignals = new Signal[outputSize];
+
+			for (int i = 0; i < outputSignals.Length; i++)
+			{
+				outputSignals[i] = new Signal(Id, i);
+			}
 		}
 
 		public void SetInput(int index, Signal input)
@@ -47,21 +51,33 @@ namespace Model
 			return inputSignals;
 		}
 
+		private bool[] GetInputValues()
+		{
+			bool[] values = new bool[inputSignals.Length];
+
+			for (int i = 0; i < inputSignals.Length; i++)
+			{
+				values[i] = inputSignals[i].Value;
+			}
+
+			return values;
+		}
+
 		protected void Update(string updateId)
 		{
-			IEnumerable<bool> outputValues = Logic(inputSignals.Select(x => x.Value));
+			bool[] outputValues = Logic(GetInputValues());
 
-			if (outputValues.Count() != outputSignals.Length)
+			if (outputValues.Length != outputSignals.Length)
 			{
 				throw new Exception($"The `{nameof(Logic)}` method must return the correct amount of outputs.");
 			}
 
 			for (int i = 0; i < outputSignals.Length; i++)
 			{
-				outputSignals[i].Update(updateId, outputValues.ElementAt(i));
+				outputSignals[i].Update(updateId, outputValues[i]);
 			}
 		}
 
-		protected abstract IEnumerable<bool> Logic(IEnumerable<bool> inputValues);
+		protected abstract bool[] Logic(bool[] inputValues);
 	}
 }
