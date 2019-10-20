@@ -12,7 +12,7 @@ namespace Model.UnitTests.Components
 		{
 			Component andGate = new AndGate("testId", 2);
 
-			Assert.IsFalse(andGate.GetOutputSignals()[0].Value);
+			Assert.IsFalse(andGate.OutputSignals[0].Value);
 		}
 
 		[TestMethod]
@@ -26,7 +26,7 @@ namespace Model.UnitTests.Components
 			andGate.SetInput(0, a);
 			andGate.SetInput(1, b);
 
-			Assert.IsFalse(andGate.GetOutputSignals()[0].Value);
+			Assert.IsFalse(andGate.OutputSignals[0].Value);
 		}
 
 		[TestMethod]
@@ -41,7 +41,7 @@ namespace Model.UnitTests.Components
 			andGate.SetInput(0, a);
 			andGate.SetInput(1, b);
 
-			Assert.IsFalse(andGate.GetOutputSignals()[0].Value);
+			Assert.IsFalse(andGate.OutputSignals[0].Value);
 		}
 
 		[TestMethod]
@@ -57,7 +57,7 @@ namespace Model.UnitTests.Components
 			andGate.SetInput(0, a);
 			andGate.SetInput(1, b);
 
-			Assert.IsTrue(andGate.GetOutputSignals()[0].Value);
+			Assert.IsTrue(andGate.OutputSignals[0].Value);
 		}
 
 		[TestMethod]
@@ -72,7 +72,7 @@ namespace Model.UnitTests.Components
 			andGate.SetInput(0, a);
 			andGate.SetInput(1, b);
 
-			Assert.IsFalse(andGate.GetOutputSignals()[0].Value);
+			Assert.IsFalse(andGate.OutputSignals[0].Value);
 		}
 	}
 }

@@ -12,6 +12,9 @@ namespace Model
 		private readonly Signal[] inputSignals;
 		private readonly Signal[] outputSignals;
 
+		public IReadOnlyList<Signal> InputSignals => inputSignals;
+		public IReadOnlyList<Signal> OutputSignals => outputSignals;
+
 		public Component(string id, string typeId, int inputSize, int outputSize)
 		{
 			Id = id;
@@ -42,16 +45,6 @@ namespace Model
 					Update(Guid.NewGuid().ToString());
 				}
 			}
-		}
-
-		public IReadOnlyList<Signal> GetInputSignals()
-		{
-			return inputSignals;
-		}
-
-		public IReadOnlyList<Signal> GetOutputSignals()
-		{
-			return outputSignals;
 		}
 
 		protected void Update(string updateId)
