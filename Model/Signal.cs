@@ -10,7 +10,7 @@ namespace Model
 		public string OwnerId { get; }
 		public int Index { get; }
 
-		private readonly Dictionary<string, SignalListener> listeners;
+		private readonly Dictionary<string, SignalListener> listeners = new Dictionary<string, SignalListener>();
 
 		private string lastUpdateId;
 		public bool Value { get; private set; }
