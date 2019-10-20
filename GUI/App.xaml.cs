@@ -1,9 +1,9 @@
 ﻿using Avalonia;
 using Avalonia.Markup.Xaml;
 
-namespace Application
+namespace GUI
 {
-	public class App : Avalonia.Application
+	public class App : Application
 	{
 		public override void Initialize()
 		{
