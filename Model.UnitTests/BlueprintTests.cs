@@ -37,6 +37,24 @@ namespace Model.UnitTests
 			blueprint.AddComponent(notC);
 		}
 
+		[TestMethod]
+		public void AddingComponentsEvent()
+		{
+			Component toAdd = notA;
+			bool hasEventListenerBeenInvoked = false;
+
+			blueprint.ComponentEvent += (sender, e) =>
+			{
+				Assert.AreEqual(toAdd, e.AffectedComponent);
+				Assert.IsTrue(e.Added);
+				hasEventListenerBeenInvoked = true;
+			};
+
+			blueprint.AddComponent(toAdd);
+
+			Assert.IsTrue(hasEventListenerBeenInvoked);
+		}
+
 		[TestMethod, ExpectedException(typeof(ArgumentException))]
 		public void AddingTwice()
 		{
@@ -54,6 +72,25 @@ namespace Model.UnitTests
 			blueprint.RemoveComponent(notA);
 			blueprint.RemoveComponent(notB);
 			blueprint.RemoveComponent(notC);
+		}
+
+		[TestMethod]
+		public void RemovingComponentsEvent()
+		{
+			AddingComponents();
+			Component toRemove = notA;
+			bool hasEventListenerBeenInvoked = false;
+
+			blueprint.ComponentEvent += (sender, e) =>
+			{
+				Assert.AreEqual(toRemove, e.AffectedComponent);
+				Assert.IsFalse(e.Added);
+				hasEventListenerBeenInvoked = true;
+			};
+
+			blueprint.RemoveComponent(toRemove);
+
+			Assert.IsTrue(hasEventListenerBeenInvoked);
 		}
 
 		[TestMethod, ExpectedException(typeof(ArgumentException))]
@@ -87,6 +124,31 @@ namespace Model.UnitTests
 		}
 
 		[TestMethod]
+		public void ConnectingComponentsEvent()
+		{
+			AddingComponents();
+			Component fromComponenet = notA;
+			int fromIndex = 0;
+			Component toComponenet = notB;
+			int toIndex = 0;
+			bool hasEventListenerBeenInvoked = false;
+
+			blueprint.ConnectionEvent += (sender, e) =>
+			{
+				Assert.AreEqual(fromComponenet, e.FromComponent);
+				Assert.AreEqual(fromIndex, e.FromIndex);
+				Assert.AreEqual(toComponenet, e.ToComponent);
+				Assert.AreEqual(toIndex, e.ToIndex);
+				Assert.IsTrue(e.Connected);
+				hasEventListenerBeenInvoked = true;
+			};
+
+			blueprint.Connect(fromComponenet, fromIndex, toComponenet, toIndex);
+
+			Assert.IsTrue(hasEventListenerBeenInvoked);
+		}
+
+		[TestMethod]
 		public void DisconnectingComponents()
 		{
 			AddingComponents();
@@ -96,6 +158,32 @@ namespace Model.UnitTests
 
 			inComponent.State = true;
 			Assert.IsTrue(notC.OutputSignals[0].Value);
+		}
+
+		[TestMethod]
+		public void DisconnectingComponentsEvent()
+		{
+			AddingComponents();
+			ConnectComponents();
+			Component fromComponenet = notA;
+			int fromIndex = 0;
+			Component toComponenet = notB;
+			int toIndex = 0;
+			bool hasEventListenerBeenInvoked = false;
+
+			blueprint.ConnectionEvent += (sender, e) =>
+			{
+				Assert.AreEqual(fromComponenet, e.FromComponent);
+				Assert.AreEqual(fromIndex, e.FromIndex);
+				Assert.AreEqual(toComponenet, e.ToComponent);
+				Assert.AreEqual(toIndex, e.ToIndex);
+				Assert.IsFalse(e.Connected);
+				hasEventListenerBeenInvoked = true;
+			};
+
+			blueprint.Disconnect(fromComponenet, fromIndex, toComponenet, toIndex);
+
+			Assert.IsTrue(hasEventListenerBeenInvoked);
 		}
 
 		[TestMethod, ExpectedException(typeof(ArgumentException))]

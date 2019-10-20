@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Model
 {
 	public class Blueprint
 	{
+		public event EventHandler<ConnectionEventArg> ConnectionEvent;
+		public event EventHandler<ComponentEventArg> ComponentEvent;
+
 		private readonly IList<Component> componentList = new List<Component>();
 
 		public int ComponentCount => componentList.Count;
@@ -24,6 +26,8 @@ namespace Model
 			}
 
 			componentList.Add(component);
+
+			ComponentEvent?.Invoke(this, (component, true));
 		}
 
 		public void RemoveComponent(Component component)
@@ -36,6 +40,8 @@ namespace Model
 			RemoveAllConnections(component);
 
 			componentList.Remove(component);
+
+			ComponentEvent?.Invoke(this, (component, false));
 		}
 
 		public void Connect(Component fromComponent, int fromIndex, Component toComponent, int toIndex)
@@ -59,6 +65,8 @@ namespace Model
 			}
 
 			toComponent.SetInput(toIndex, fromComponent.OutputSignals[fromIndex]);
+
+			ConnectionEvent?.Invoke(this, (fromComponent, fromIndex, toComponent, toIndex, true));
 		}
 
 		public void Disconnect(Component fromComponent, int fromIndex, Component toComponent, int toIndex)
@@ -82,6 +90,8 @@ namespace Model
 			}
 
 			toComponent.SetInput(toIndex, null);
+
+			ConnectionEvent?.Invoke(this, (fromComponent, fromIndex, toComponent, toIndex, false));
 		}
 
 		public IReadOnlyCollection<Connection> IncomingConnectionsFor(Component component)
@@ -186,6 +196,46 @@ namespace Model
 					connection.ToIndex
 				);
 			}
+		}
+	}
+
+	public struct ConnectionEventArg
+	{
+		public Component FromComponent { get; }
+		public int FromIndex { get; }
+		public Component ToComponent { get; }
+		public int ToIndex { get; }
+		public bool Connected { get; }
+
+		public ConnectionEventArg(Component fromComponent, int fromIndex, Component toComponent, int toIndex, bool connected)
+		{
+			FromComponent = fromComponent;
+			FromIndex = fromIndex;
+			ToComponent = toComponent;
+			ToIndex = toIndex;
+			Connected = connected;
+		}
+
+		public static implicit operator ConnectionEventArg(ValueTuple<Component, int, Component, int, bool> tupple)
+		{
+			return new ConnectionEventArg(tupple.Item1, tupple.Item2, tupple.Item3, tupple.Item4, tupple.Item5);
+		}
+	}
+
+	public struct ComponentEventArg
+	{
+		public Component AffectedComponent { get; }
+		public bool Added { get; }
+
+		public ComponentEventArg(Component affectedComponent, bool added)
+		{
+			AffectedComponent = affectedComponent;
+			Added = added;
+		}
+
+		public static implicit operator ComponentEventArg(ValueTuple<Component, bool> tupple)
+		{
+			return new ComponentEventArg(tupple.Item1, tupple.Item2);
 		}
 	}
 }
