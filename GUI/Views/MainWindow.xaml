@@ -15,6 +15,7 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File">
+				<MenuItem Header="_New..." Command="{Binding NewCommand}"/>
 				<MenuItem Header="_Open..."/>
 				<MenuItem Header="_Save"/>
 				<MenuItem Header="_Exit" Command="{Binding ExitCommand}"/>

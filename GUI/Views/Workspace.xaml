@@ -9,6 +9,17 @@
 		<vm:WorkspaceViewModel/>
 	</Design.DataContext>
 
-	<TabControl/>
+	<TabControl Items="{Binding Items}">
+		<TabControl.ItemTemplate>
+			<DataTemplate>
+				<TextBlock Text="{Binding Name}"/>
+			</DataTemplate>
+		</TabControl.ItemTemplate>
+		<TabControl.ContentTemplate>
+			<DataTemplate>
+				<!--Content of the tab-->
+			</DataTemplate>
+		</TabControl.ContentTemplate>
+	</TabControl>
 
 </UserControl>

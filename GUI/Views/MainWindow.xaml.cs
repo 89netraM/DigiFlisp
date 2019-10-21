@@ -17,13 +17,19 @@ namespace GUI.Views
 
 			DataContext = new MainWindowViewModel
 			{
-				CloseAction = new Action(this.Close)
+				CloseAction = new Action(this.Close),
+				NewAction = new Func<string>(NewDialog)
 			};
 		}
 
 		private void InitializeComponent()
 		{
 			AvaloniaXamlLoader.Load(this);
+		}
+
+		private string NewDialog()
+		{
+			return DateTime.Now.ToString("HH:mm:ss");
 		}
 	}
 }

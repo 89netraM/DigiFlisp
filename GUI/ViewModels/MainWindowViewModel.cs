@@ -11,6 +11,9 @@ namespace GUI.ViewModels
 		public ComponentListViewModel ComponentList { get; }
 		public WorkspaceViewModel Workspace { get; }
 
+		public ReactiveCommand<Unit, Unit> NewCommand { get; }
+		public Func<string> NewAction { get; set; }
+
 		public ReactiveCommand<Unit, Unit> ExitCommand { get; }
 		public Action CloseAction { get; set; }
 
@@ -19,7 +22,19 @@ namespace GUI.ViewModels
 			ComponentList = new ComponentListViewModel();
 			Workspace = new WorkspaceViewModel();
 
+			NewCommand = ReactiveCommand.Create(NewCommandAction);
+
 			ExitCommand = ReactiveCommand.Create(ExitCommandAction);
+		}
+
+		private void NewCommandAction()
+		{
+			string newName = NewAction?.Invoke();
+
+			if (newName != null)
+			{
+				Workspace.AddWorkspaceItem(newName);
+			}
 		}
 
 		private void ExitCommandAction()
