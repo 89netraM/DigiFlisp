@@ -31,6 +31,8 @@
 			</Grid.ColumnDefinitions>
 
 			<v:ComponentList DataContext="{Binding ComponentList}" Grid.Row="0" Grid.Column="0"/>
+
+			<v:Workspace DataContext="{Binding Workspace}" Grid.Row="0" Grid.Column="1"/>
 		</Grid>
 	</DockPanel>
 

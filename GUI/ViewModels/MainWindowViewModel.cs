@@ -9,6 +9,7 @@ namespace GUI.ViewModels
 	public class MainWindowViewModel : ViewModelBase
 	{
 		public ComponentListViewModel ComponentList { get; }
+		public WorkspaceViewModel Workspace { get; }
 
 		public ReactiveCommand<Unit, Unit> ExitCommand { get; }
 		public Action CloseAction { get; set; }
@@ -16,6 +17,7 @@ namespace GUI.ViewModels
 		public MainWindowViewModel()
 		{
 			ComponentList = new ComponentListViewModel();
+			Workspace = new WorkspaceViewModel();
 
 			ExitCommand = ReactiveCommand.Create(ExitCommandAction);
 		}
