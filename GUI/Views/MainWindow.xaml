@@ -1,6 +1,7 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:GUI.ViewModels;assembly=GUI"
+        xmlns:v="clr-namespace:GUI.Views;assembly=GUI"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -24,7 +25,12 @@
 		</Menu>
 
 		<Grid DockPanel.Dock="Bottom">
-			<!-- The rest -->
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="250"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+			<v:ComponentList DataContext="{Binding ComponentList}" Grid.Row="0" Grid.Column="0"/>
 		</Grid>
 	</DockPanel>
 
