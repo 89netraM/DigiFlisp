@@ -1,11 +1,24 @@
-﻿using System;
+﻿using ReactiveUI;
+using System;
 using System.Collections.Generic;
+using System.Reactive;
 using System.Text;
 
 namespace GUI.ViewModels
 {
 	public class MainWindowViewModel : ViewModelBase
 	{
-		public string Greeting => "Welcome to Avalonia!";
+		public ReactiveCommand<Unit, Unit> ExitCommand { get; }
+		public Action CloseAction { get; set; }
+
+		public MainWindowViewModel()
+		{
+			ExitCommand = ReactiveCommand.Create(ExitCommandAction);
+		}
+
+		private void ExitCommandAction()
+		{
+			CloseAction?.Invoke();
+		}
 	}
 }

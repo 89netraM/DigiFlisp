@@ -24,12 +24,7 @@ namespace GUI
 		// container, etc.
 		private static void AppMain(Application app, string[] args)
 		{
-			var window = new MainWindow
-			{
-				DataContext = new MainWindowViewModel(),
-			};
-
-			app.Run(window);
+			app.Run(new MainWindow());
 		}
 	}
 }

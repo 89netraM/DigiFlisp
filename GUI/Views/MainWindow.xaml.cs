@@ -1,6 +1,8 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using GUI.ViewModels;
+using System;
 
 namespace GUI.Views
 {
@@ -12,6 +14,11 @@ namespace GUI.Views
 #if DEBUG
             this.AttachDevTools();
 #endif
+
+			DataContext = new MainWindowViewModel
+			{
+				CloseAction = new Action(this.Close)
+			};
 		}
 
 		private void InitializeComponent()

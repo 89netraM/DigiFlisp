@@ -7,11 +7,25 @@
         x:Class="GUI.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="GUI">
-
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="_File">
+				<MenuItem Header="_Open..."/>
+				<MenuItem Header="_Save"/>
+				<MenuItem Header="_Exit" Command="{Binding ExitCommand}"/>
+			</MenuItem>
+			<MenuItem Header="_Help">
+				<MenuItem Header="_About"/>
+			</MenuItem>
+		</Menu>
+
+		<Grid DockPanel.Dock="Bottom">
+			<!-- The rest -->
+		</Grid>
+	</DockPanel>
 
 </Window>
