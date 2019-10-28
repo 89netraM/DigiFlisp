@@ -49,13 +49,10 @@ namespace Model.UnitTests.Components
 			outComponent.SetInput(0, signal);
 			bool hasListenerBeenInvoked = false;
 
-			outComponent.IndicatorSignal.AddListener(
-				"testListenerId",
-				updateId =>
-				{
-					hasListenerBeenInvoked = true;
-				}
-			);
+			outComponent.IndicatorSignal += (sender, value) =>
+			{
+				hasListenerBeenInvoked = true;
+			};
 			signal.Update(true);
 
 			Assert.IsTrue(hasListenerBeenInvoked, "The listeners of output should be called imeadietly after a state change.");

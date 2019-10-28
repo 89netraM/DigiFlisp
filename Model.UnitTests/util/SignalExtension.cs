@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Model.UnitTests.util
 {
@@ -6,7 +7,7 @@ namespace Model.UnitTests.util
 	{
 		public static void Update(this Signal signal, bool newValue)
 		{
-			signal.Update(Guid.NewGuid().ToString(), newValue);
+			signal.Update(new Stack<UpdateRecord>(), newValue);
 		}
 	}
 }

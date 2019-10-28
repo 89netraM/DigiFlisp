@@ -8,7 +8,7 @@ namespace Model.Components
 	{
 		public static readonly string OutputTypeId = "OUTPUT";
 
-		public readonly Signal IndicatorSignal;
+		public event EventHandler<bool> IndicatorSignal;
 
 		private bool state;
 		public bool State
@@ -20,21 +20,18 @@ namespace Model.Components
 				{
 					state = value;
 
-					IndicatorSignal.Update(Guid.NewGuid().ToString(), value);
+					IndicatorSignal?.Invoke(this, value);
 				}
 			}
 		}
 
-		public OutputComponent(string id) : base(id, OutputTypeId, 1, 0)
-		{
-			IndicatorSignal = new Signal(Id, -1);
-		}
+		public OutputComponent(string id) : base(id, OutputTypeId, 1, 0) { }
 
 		protected override IEnumerable<bool> Logic(IEnumerable<bool> inputValues)
 		{
 			State = inputValues.ElementAt(0);
 
-			return new bool[0];
+			return Array.Empty<bool>();
 		}
 	}
 }

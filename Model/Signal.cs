@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Model
 {
-	public delegate void SignalListener(string updateId);
+	public delegate void SignalListener(Stack<UpdateRecord> updates);
 
 	public sealed class Signal
 	{
@@ -12,7 +12,6 @@ namespace Model
 
 		private readonly Dictionary<string, SignalListener> listeners = new Dictionary<string, SignalListener>();
 
-		private string lastUpdateId;
 		public bool Value { get; private set; }
 
 		public Signal(string ownerId, int index)
@@ -31,26 +30,25 @@ namespace Model
 			listeners.Remove(listenerId);
 		}
 
-		internal void Update(string updateId, bool newValue)
+		internal void Update(Stack<UpdateRecord> updates, bool newValue)
 		{
-			if (updateId == null)
-			{
-				throw new ArgumentNullException(nameof(updateId));
-			}
-			else if (updateId != lastUpdateId)
-			{
-				lastUpdateId = updateId;
+			UpdateRecord thisUpdate = new UpdateRecord(OwnerId, Index);
 
+			if (!updates.Contains(thisUpdate))
+			{
 				Value = newValue;
-				InvokeListeners(updateId);
+
+				updates.Push(thisUpdate);
+				InvokeListeners(updates);
+				updates.Pop();
 			}
 		}
 
-		private void InvokeListeners(string updateId)
+		private void InvokeListeners(Stack<UpdateRecord> updates)
 		{
 			foreach (SignalListener listener in listeners.Values)
 			{
-				listener?.Invoke(updateId);
+				listener?.Invoke(updates);
 			}
 		}
 	}

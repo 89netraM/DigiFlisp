@@ -25,7 +25,7 @@ namespace Model
 			inputSignals = new Signal[inputSize];
 			outputSignals = (new Signal[outputSize]).Select((ignored, index) => new Signal(Id, index)).ToArray();
 
-			Update(Guid.NewGuid().ToString());
+			Update(new Stack<UpdateRecord>());
 		}
 
 		public void SetInput(int index, Signal input)
@@ -44,12 +44,12 @@ namespace Model
 					inputSignals[index] = input;
 					input.AddListener(Id + index, Update);
 
-					Update(Guid.NewGuid().ToString());
+					Update(new Stack<UpdateRecord>());
 				}
 			}
 		}
 
-		protected void Update(string updateId)
+		protected void Update(Stack<UpdateRecord> updates)
 		{
 			IEnumerable<bool> outputValues = Logic(inputSignals.Select(x => x?.Value ?? false));
 
@@ -60,7 +60,7 @@ namespace Model
 
 			for (int i = 0; i < outputSignals.Length; i++)
 			{
-				outputSignals[i].Update(updateId, outputValues.ElementAt(i));
+				outputSignals[i].Update(updates, outputValues.ElementAt(i));
 			}
 		}
 

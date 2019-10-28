@@ -17,7 +17,7 @@ namespace Model.Components
 				{
 					state = value;
 
-					Update(Guid.NewGuid().ToString());
+					Update(new Stack<UpdateRecord>());
 				}
 			}
 		}
