@@ -23,6 +23,8 @@ namespace GUI.Views.Infinite
 			transforms.Children.Add(Scale);
 			RenderTransform = transforms;
 
+			Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
+
 			PointerPressed += InfiniteCanvasBlock_PointerPressed;
 			PointerMoved += InfiniteCanvasBlock_PointerMoved;
 		}

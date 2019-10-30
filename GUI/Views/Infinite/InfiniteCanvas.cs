@@ -2,6 +2,7 @@
 using Avalonia.Input;
 using Avalonia.Controls;
 using System;
+using Avalonia.Media;
 
 namespace GUI.Views.Infinite
 {
@@ -53,12 +54,12 @@ namespace GUI.Views.Infinite
 
 		public InfiniteCanvas()
 		{
+			Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
+
 			PointerPressed += InfiniteCanvas_PointerPressed;
 			PointerMoved += InfiniteCanvas_PointerMoved;
 			PointerReleased += InfiniteCanvas_PointerReleased;
 			PointerWheelChanged += InfiniteCanvas_PointerWheelChanged;
-
-			InvalidateArrange();
 		}
 
 		private void InfiniteCanvas_PointerPressed(object sender, PointerPressedEventArgs e)
