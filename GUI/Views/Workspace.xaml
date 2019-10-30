@@ -1,6 +1,7 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:vm="clr-namespace:GUI.ViewModels;assembly=GUI"
+			 xmlns:v="clr-namespace:GUI.Views;assembly=GUI"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="450"
@@ -17,7 +18,7 @@
 		</TabControl.ItemTemplate>
 		<TabControl.ContentTemplate>
 			<DataTemplate>
-				<!--Content of the tab-->
+				<v:Blueprint DataContext="{Binding Blueprint}"/>
 			</DataTemplate>
 		</TabControl.ContentTemplate>
 	</TabControl>

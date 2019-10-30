@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using Model;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Reactive;
@@ -33,7 +34,7 @@ namespace GUI.ViewModels
 
 			if (newName != null)
 			{
-				Workspace.AddWorkspaceItem(newName);
+				Workspace.AddWorkspaceItem(newName, new Blueprint());
 			}
 		}
 
