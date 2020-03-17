@@ -112,7 +112,7 @@ namespace GUI.Views.Infinite
 					Size originalSize = childBlock.Bounds.Size;
 					Size zoomedSize = originalSize * zoomFactor;
 					Vector halfDimensions = new Vector(zoomedSize.Width - originalSize.Width, zoomedSize.Height - originalSize.Height) / 2.0d;
-					Point position = offset + GetPosition(childBlock) * coordinateSize;
+					Point position = offset + GetPosition(childBlock) * coordinateSize * zoomFactor + halfDimensions;
 
 					Size size = GetSize(childBlock) * coordinateSize;
 
