@@ -1,4 +1,4 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
@@ -10,7 +10,12 @@ namespace GUI.Views.Infinite
 		private Point pointerMoveStart;
 		private Point coordinateMoveStart;
 
-		public ScaleTransform Scale { get; } = new ScaleTransform(1.0d, 1.0d);
+		private ScaleTransform scale { get; } = new ScaleTransform(1.0d, 1.0d);
+		public double Scale
+		{
+			get => scale.ScaleX;
+			set => scale.ScaleX = scale.ScaleY = value;
+		}
 
 		public InfiniteCanvasBlock()
 		{
@@ -20,7 +25,7 @@ namespace GUI.Views.Infinite
 			{
 				transforms.Children.Add(RenderTransform);
 			}
-			transforms.Children.Add(Scale);
+			transforms.Children.Add(scale);
 			RenderTransform = transforms;
 
 			Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));

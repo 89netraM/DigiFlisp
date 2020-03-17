@@ -117,7 +117,7 @@ namespace GUI.Views.Infinite
 					Size size = GetSize(childBlock) * coordinateSize;
 
 					childBlock.Arrange(new Rect(position, size));
-					childBlock.Scale.ScaleX = childBlock.Scale.ScaleY = zoomFactor;
+					childBlock.Scale = zoomFactor;
 				}
 			}
 
