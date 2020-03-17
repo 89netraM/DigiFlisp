@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
@@ -48,8 +48,8 @@ namespace GUI.Views.Infinite
 				Size actualSize = Bounds.Size;
 				Size infiniteCanvasSize = InfiniteCanvas.GetSize(this);
 				Point deltaPosition = new Point(
-					delta.X / (actualSize.Width / infiniteCanvasSize.Width) / Scale.ScaleX,
-					delta.Y / (actualSize.Height / infiniteCanvasSize.Height) / Scale.ScaleY
+					delta.X / (actualSize.Width / infiniteCanvasSize.Width),
+					delta.Y / (actualSize.Height / infiniteCanvasSize.Height)
 				);
 
 				InfiniteCanvas.SetPosition(this, coordinateMoveStart + deltaPosition);
