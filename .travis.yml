@@ -4,4 +4,4 @@ mono: none
 dotnet: 3.0.100
 script:
   - dotnet restore
-  - dotnet test
+  - if ! [[ $TRAVIS_COMMIT_MESSAGE == GUI:* ]]; then dotnet test; fi;
