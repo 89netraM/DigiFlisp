@@ -53,8 +53,8 @@ namespace GUI.Views.Infinite
 				Size actualSize = Bounds.Size;
 				Size infiniteCanvasSize = InfiniteCanvas.GetSize(this);
 				Point deltaPosition = new Point(
-					delta.X / (actualSize.Width / infiniteCanvasSize.Width),
-					delta.Y / (actualSize.Height / infiniteCanvasSize.Height)
+					delta.X / (actualSize.Width / infiniteCanvasSize.Width) / scale.ScaleX,
+					delta.Y / (actualSize.Height / infiniteCanvasSize.Height) / scale.ScaleY
 				);
 
 				InfiniteCanvas.SetPosition(this, coordinateMoveStart + deltaPosition);
