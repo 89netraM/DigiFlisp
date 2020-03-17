@@ -64,7 +64,7 @@ namespace GUI.Views.Infinite
 
 		private void InfiniteCanvas_PointerPressed(object sender, PointerPressedEventArgs e)
 		{
-			if (e.MouseButton == MouseButton.Middle)
+			if (e.GetCurrentPoint(this).Properties.IsMiddleButtonPressed)
 			{
 				lastPointerMove = e.GetPosition(this);
 			}
@@ -72,7 +72,7 @@ namespace GUI.Views.Infinite
 
 		private void InfiniteCanvas_PointerMoved(object sender, PointerEventArgs e)
 		{
-			if (e.InputModifiers == InputModifiers.MiddleMouseButton && lastPointerMove.HasValue)
+			if (e.GetCurrentPoint(this).Properties.IsMiddleButtonPressed && lastPointerMove.HasValue)
 			{
 				Point nextPointerMove = e.GetPosition(this);
 				offset += nextPointerMove - lastPointerMove.Value;
@@ -84,7 +84,7 @@ namespace GUI.Views.Infinite
 
 		private void InfiniteCanvas_PointerReleased(object sender, PointerReleasedEventArgs e)
 		{
-			if (e.MouseButton == MouseButton.Middle)
+			if (e.InitialPressMouseButton == MouseButton.Middle)
 			{
 				lastPointerMove = null;
 			}

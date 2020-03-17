@@ -31,7 +31,7 @@ namespace GUI.Views.Infinite
 
 		private void InfiniteCanvasBlock_PointerPressed(object sender, PointerPressedEventArgs e)
 		{
-			if (e.MouseButton == MouseButton.Left)
+			if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
 			{
 				pointerMoveStart = Bounds.Center;
 				coordinateMoveStart = InfiniteCanvas.GetPosition(this);
@@ -40,7 +40,7 @@ namespace GUI.Views.Infinite
 
 		private void InfiniteCanvasBlock_PointerMoved(object sender, PointerEventArgs e)
 		{
-			if (e.InputModifiers == InputModifiers.LeftMouseButton)
+			if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
 			{
 				Point pointer = e.GetPosition(Parent);
 				Point delta = pointer - pointerMoveStart;
