@@ -7,6 +7,9 @@ namespace GUI.Views.Infinite
 {
 	public class InfiniteCanvasBlock : UserControl
 	{
+		private const int defaultZIndex = 0;
+		private const int liftedZIndex = 10;
+
 		private Point pointerMoveStart;
 		private Point coordinateMoveStart;
 
@@ -32,6 +35,7 @@ namespace GUI.Views.Infinite
 
 			PointerPressed += InfiniteCanvasBlock_PointerPressed;
 			PointerMoved += InfiniteCanvasBlock_PointerMoved;
+			PointerReleased += InfiniteCanvasBlock_PointerReleased;
 		}
 
 		private void InfiniteCanvasBlock_PointerPressed(object sender, PointerPressedEventArgs e)
@@ -40,6 +44,7 @@ namespace GUI.Views.Infinite
 			{
 				pointerMoveStart = Bounds.Center;
 				coordinateMoveStart = InfiniteCanvas.GetPosition(this);
+				SetValue(ZIndexProperty, liftedZIndex);
 			}
 		}
 
@@ -59,6 +64,11 @@ namespace GUI.Views.Infinite
 
 				InfiniteCanvas.SetPosition(this, coordinateMoveStart + deltaPosition);
 			}
+		}
+
+		private void InfiniteCanvasBlock_PointerReleased(object sender, PointerReleasedEventArgs e)
+		{
+			SetValue(ZIndexProperty, defaultZIndex);
 		}
 	}
 }
