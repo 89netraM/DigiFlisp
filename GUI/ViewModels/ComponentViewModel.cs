@@ -2,6 +2,7 @@
 using System;
 using ReactiveUI;
 using Model;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace GUI.ViewModels
@@ -36,8 +37,10 @@ namespace GUI.ViewModels
 
 		public Size Size { get; }
 
-		public IEnumerable<Signal> InputSignals => model.InputSignals;
-		public IEnumerable<Signal> OutputSignals => model.OutputSignals;
+		private readonly SignalViewModel[] inputSignals;
+		private readonly SignalViewModel[] outputSignals;
+		public IEnumerable<SignalViewModel> InputSignals => inputSignals;
+		public IEnumerable<SignalViewModel> OutputSignals => outputSignals;
 
 		public ComponentViewModel(Component model)
 		{
@@ -46,6 +49,10 @@ namespace GUI.ViewModels
 
 			int maxNrConnections = Math.Max(this.model.InputSignals.Count, this.model.OutputSignals.Count);
 			Size = new Size(5, 3 + 2 * (maxNrConnections - 1));
+
+			inputSignals = this.model.InputSignals.Select((x, i) => new SignalViewModel(i, x)).ToArray();
+			outputSignals = this.model.OutputSignals.Select((x, i) => new SignalViewModel(i, x)).ToArray();
+			this.model.InputSignalChanged += Model_InputSignalChanged;
 		}
 
 		private void Position_ChangeEvent(object sender, PositionEvent e)
@@ -53,11 +60,16 @@ namespace GUI.ViewModels
 			this.RaisePropertyChanged(nameof(Position));
 		}
 
-		public void InputSignalTapped(Signal signal)
+		private void Model_InputSignalChanged(object sender, InputSignalChangeEvent e)
+		{
+			inputSignals[e.Index].Signal = model.InputSignals[e.Index];
+		}
+
+		public void InputSignalTapped(SignalViewModel signal)
 		{
 			throw new NotImplementedException();
 		}
-		public void OutputSignalTapped(Signal signal)
+		public void OutputSignalTapped(SignalViewModel signal)
 		{
 			throw new NotImplementedException();
 		}

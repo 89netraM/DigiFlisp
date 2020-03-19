@@ -3,13 +3,15 @@
 					   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 					   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 					   xmlns:vi="clr-namespace:GUI.Views.Infinite;assembly=GUI"
+					   xmlns:local="clr-namespace:GUI.Views.Components;assembly=GUI"
 					   mc:Ignorable="d" d:DesignWidth="50" d:DesignHeight="50"
 					   x:Class="GUI.Views.Components.Component"
 					   vi:InfiniteCanvas.Position="{Binding Model.Position}" vi:InfiniteCanvas.Size="{Binding Model.Size}">
 	<vi:InfiniteCanvasBlock.Resources>
 		<ResourceDictionary>
+			<local:SignalToColorConverter x:Key="SignalToColorConverter"/>
 			<DataTemplate x:Key="SignalTemplate">
-				<Rectangle Width="10" Height="10" Fill="White" Tag="{Binding}"/>
+				<Rectangle Width="10" Height="10" Fill="{Binding Signal, Converter={StaticResource SignalToColorConverter}}" Tag="{Binding}"/>
 			</DataTemplate>
 		</ResourceDictionary>
 	</vi:InfiniteCanvasBlock.Resources>
