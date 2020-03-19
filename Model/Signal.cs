@@ -12,7 +12,20 @@ namespace Model
 
 		private readonly Dictionary<string, SignalListener> listeners = new Dictionary<string, SignalListener>();
 
-		public bool Value { get; private set; }
+		private bool value;
+		public bool Value
+		{
+			get => value;
+			private set
+			{
+				if (this.value != value)
+				{
+					this.value = value;
+					ValueChange?.Invoke(this, new EventArgs());
+				}
+			}
+		}
+		public event EventHandler ValueChange;
 
 		public Signal(string ownerId, int index)
 		{

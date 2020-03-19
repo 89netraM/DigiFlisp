@@ -43,6 +43,22 @@ namespace Model.UnitTests
 		}
 
 		[TestMethod]
+		public void ShouldInvokeEventsOnUpdate()
+		{
+			Signal signal = new Signal("testOwnerId", 0);
+			bool hasEventBeenInvoked = false;
+
+			signal.ValueChange += (sender, e) =>
+			{
+				hasEventBeenInvoked = true;
+			};
+
+			signal.Update(true); // Only sendes event on actual changes
+
+			Assert.IsTrue(hasEventBeenInvoked, "The event should have been invoked.");
+		}
+
+		[TestMethod]
 		public void ShouldInvokeAllListenersOnUpdate()
 		{
 			Signal signal = new Signal("testOwnerId", 0);
