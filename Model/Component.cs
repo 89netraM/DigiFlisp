@@ -17,6 +17,8 @@ namespace Model
 		public IReadOnlyList<Signal> InputSignals => inputSignals;
 		public IReadOnlyList<Signal> OutputSignals => outputSignals;
 
+		public event EventHandler<InputSignalChangeEvent> InputSignalChanged;
+
 		public Component(string id, string typeId, int inputSize, int outputSize)
 		{
 			Id = id;
@@ -34,6 +36,8 @@ namespace Model
 
 			if (oldInput != input)
 			{
+				bool wasAdded = false;
+
 				if (oldInput != null)
 				{
 					oldInput.RemoveListener(Id + index);
@@ -45,7 +49,10 @@ namespace Model
 					input.AddListener(Id + index, Update);
 
 					Update(new Stack<UpdateRecord>());
+					wasAdded = true;
 				}
+
+				InputSignalChanged?.Invoke(this, new InputSignalChangeEvent(index, wasAdded));
 			}
 		}
 
@@ -65,5 +72,17 @@ namespace Model
 		}
 
 		protected abstract IEnumerable<bool> Logic(IEnumerable<bool> inputValues);
+	}
+
+	public readonly struct InputSignalChangeEvent
+	{
+		public int Index { get; }
+		public bool WasAdded { get; }
+
+		public InputSignalChangeEvent(int index, bool wasAdded)
+		{
+			Index = index;
+			WasAdded = wasAdded;
+		}
 	}
 }
