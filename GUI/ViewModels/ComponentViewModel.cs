@@ -2,6 +2,7 @@
 using System;
 using ReactiveUI;
 using Model;
+using System.Collections.Generic;
 
 namespace GUI.ViewModels
 {
@@ -35,6 +36,9 @@ namespace GUI.ViewModels
 
 		public Size Size { get; }
 
+		public IEnumerable<Signal> InputSignals => model.InputSignals;
+		public IEnumerable<Signal> OutputSignals => model.OutputSignals;
+
 		public ComponentViewModel(Component model)
 		{
 			this.model = model ?? throw new ArgumentNullException(nameof(model));
@@ -47,6 +51,15 @@ namespace GUI.ViewModels
 		private void Position_ChangeEvent(object sender, PositionEvent e)
 		{
 			this.RaisePropertyChanged(nameof(Position));
+		}
+
+		public void InputSignalTapped(Signal signal)
+		{
+			throw new NotImplementedException();
+		}
+		public void OutputSignalTapped(Signal signal)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

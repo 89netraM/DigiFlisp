@@ -6,5 +6,34 @@
 					   mc:Ignorable="d" d:DesignWidth="50" d:DesignHeight="50"
 					   x:Class="GUI.Views.Components.Component"
 					   vi:InfiniteCanvas.Position="{Binding Model.Position}" vi:InfiniteCanvas.Size="{Binding Model.Size}">
-	<Border BorderBrush="Black" BorderThickness="5" Child="{Binding Content, Mode=OneWay}"/>
+	<vi:InfiniteCanvasBlock.Resources>
+		<ResourceDictionary>
+			<DataTemplate x:Key="SignalTemplate">
+				<Rectangle Width="10" Height="10" Fill="White" Tag="{Binding}"/>
+			</DataTemplate>
+		</ResourceDictionary>
+	</vi:InfiniteCanvasBlock.Resources>
+	<Grid RowDefinitions="10,*,10" ColumnDefinitions="10,*,10">
+		<Border BorderBrush="Black" BorderThickness="5" Child="{Binding Content, Mode=OneWay}" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
+
+		<ScrollViewer Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"
+					  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
+			<ItemsRepeater Items="{Binding Model.InputSignals}" Control.Tapped="InputTapped"
+						   ItemTemplate="{StaticResource SignalTemplate}">
+				<ItemsRepeater.Layout>
+					<StackLayout Orientation="Vertical" Spacing="10"/>
+				</ItemsRepeater.Layout>
+			</ItemsRepeater>
+		</ScrollViewer>
+
+		<ScrollViewer Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right"
+					  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
+			<ItemsRepeater Items="{Binding Model.OutputSignals}" Control.Tapped="OutputTapped"
+						   ItemTemplate="{StaticResource SignalTemplate}">
+				<ItemsRepeater.Layout>
+					<StackLayout Orientation="Vertical" Spacing="10"/>
+				</ItemsRepeater.Layout>
+			</ItemsRepeater>
+		</ScrollViewer>
+	</Grid>
 </vi:InfinitCanvasBlock>

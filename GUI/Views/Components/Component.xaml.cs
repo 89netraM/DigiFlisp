@@ -1,4 +1,6 @@
-﻿using Avalonia.Markup.Xaml;
+﻿using Avalonia.Controls.Shapes;
+using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
 using GUI.ViewModels;
 using GUI.Views.Infinite;
 using System;
@@ -31,6 +33,15 @@ namespace GUI.Views.Components
 		private void InitializeComponent()
 		{
 			AvaloniaXamlLoader.Load(this);
+		}
+
+		private void InputTapped(object sender, RoutedEventArgs e)
+		{
+			Model?.InputSignalTapped((e.Source as Rectangle)?.Tag as Model.Signal);
+		}
+		private void OutputTapped(object sender, RoutedEventArgs e)
+		{
+			Model?.OutputSignalTapped((e.Source as Rectangle)?.Tag as Model.Signal);
 		}
 	}
 
