@@ -3,6 +3,7 @@ using GUI.ViewModels.Components;
 using GUI.Views.Components;
 using GUI.Views.Infinite;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 
@@ -58,7 +59,7 @@ namespace GUI.Views
 
 		private void AddComponent(ComponentViewModel component)
 		{
-			Children.Add(ComponentFactory.Create(component));
+			Children.Add(Components.ComponentFactory.Create(component));
 		}
 
 		private void RemoveComponent(ComponentViewModel component)

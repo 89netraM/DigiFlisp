@@ -1,4 +1,4 @@
-﻿using GUI.ViewModels.Components;
+using GUI.ViewModels.Components;
 using Model;
 using System;
 using System.Collections.ObjectModel;
@@ -31,7 +31,7 @@ namespace GUI.ViewModels
 		{
 			if (e.Added)
 			{
-				ComponentViewModel c = new ComponentViewModel(e.AffectedComponent);
+				ComponentViewModel c = ComponentFactory.Create(e.AffectedComponent);
 				c.Connect += Component_Connect;
 				Components.Add(c);
 			}

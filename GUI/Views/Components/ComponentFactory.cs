@@ -1,23 +1,28 @@
-using GUI.ViewModels;
+﻿using Avalonia.Controls;
 using GUI.ViewModels.Components;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GUI.Views.Components
 {
 	public static class ComponentFactory
 	{
+		private static readonly Func<IControl> defaultCreator = () => new IconComponent();
+		private static readonly IReadOnlyDictionary<string, Func<IControl>> creatorDictionary = new Dictionary<string, Func<IControl>>
+		{
+			[Model.Components.InputComponent.InputTypeId] = () => new InputComponent()
+		};
+
 		public static Component Create(ComponentViewModel component)
 		{
+			IControl view = creatorDictionary.GetValueOrDefault(component.TypeId, defaultCreator).Invoke();
+			view.DataContext = component;
+
 			return new Component
 			{
 				Name = component.Id,
 				DataContext = component,
-				Content = new IconComponent
-				{
-					DataContext = component
-				}
+				Content = view
 			};
 		}
 	}
