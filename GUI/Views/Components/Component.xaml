@@ -6,12 +6,12 @@
 					   xmlns:local="clr-namespace:GUI.Views.Components;assembly=GUI"
 					   mc:Ignorable="d" d:DesignWidth="50" d:DesignHeight="50"
 					   x:Class="GUI.Views.Components.Component"
-					   vi:InfiniteCanvas.Position="{Binding Model.Position}" vi:InfiniteCanvas.Size="{Binding Model.Size}">
+					   vi:InfiniteCanvas.Position="{Binding Position}" vi:InfiniteCanvas.Size="{Binding Size}">
 	<vi:InfiniteCanvasBlock.Resources>
 		<ResourceDictionary>
 			<local:SignalToColorConverter x:Key="SignalToColorConverter"/>
 			<DataTemplate x:Key="SignalTemplate">
-				<Rectangle Width="10" Height="10" Fill="{Binding Signal, Converter={StaticResource SignalToColorConverter}}" Tag="{Binding}"/>
+				<Rectangle Width="10" Height="10" Fill="{Binding Signal, Converter={StaticResource SignalToColorConverter}, Mode=OneWay}" Tag="{Binding}"/>
 			</DataTemplate>
 		</ResourceDictionary>
 	</vi:InfiniteCanvasBlock.Resources>
@@ -20,7 +20,7 @@
 
 		<ScrollViewer Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"
 					  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
-			<ItemsRepeater Items="{Binding Model.InputSignals}" Control.Tapped="InputTapped"
+			<ItemsRepeater Items="{Binding InputSignals}" Control.Tapped="InputTapped"
 						   ItemTemplate="{StaticResource SignalTemplate}">
 				<ItemsRepeater.Layout>
 					<StackLayout Orientation="Vertical" Spacing="10"/>
@@ -30,7 +30,7 @@
 
 		<ScrollViewer Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right"
 					  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
-			<ItemsRepeater Items="{Binding Model.OutputSignals}" Control.Tapped="OutputTapped"
+			<ItemsRepeater Items="{Binding OutputSignals}" Control.Tapped="OutputTapped"
 						   ItemTemplate="{StaticResource SignalTemplate}">
 				<ItemsRepeater.Layout>
 					<StackLayout Orientation="Vertical" Spacing="10"/>

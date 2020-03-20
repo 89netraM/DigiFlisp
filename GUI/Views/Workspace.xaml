@@ -18,7 +18,7 @@
 		</TabControl.ItemTemplate>
 		<TabControl.ContentTemplate>
 			<DataTemplate>
-				<v:Blueprint DataContext="{Binding Blueprint}"/>
+				<v:Blueprint DataContext="{Binding}"/>
 			</DataTemplate>
 		</TabControl.ContentTemplate>
 	</TabControl>

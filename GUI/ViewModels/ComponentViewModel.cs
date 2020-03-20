@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using System;
 using ReactiveUI;
 using Model;
@@ -10,6 +10,8 @@ namespace GUI.ViewModels
 	public class ComponentViewModel : ViewModelBase
 	{
 		private readonly Component model;
+
+		public string Id => model.Id;
 
 		public Point Position
 		{
