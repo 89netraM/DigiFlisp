@@ -1,8 +1,8 @@
 ﻿using GUI.ViewModels;
+using GUI.ViewModels.Components;
 using GUI.Views.Components;
 using GUI.Views.Infinite;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 

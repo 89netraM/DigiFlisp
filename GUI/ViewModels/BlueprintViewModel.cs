@@ -1,9 +1,8 @@
-﻿using DynamicData.Binding;
+﻿using GUI.ViewModels.Components;
 using Model;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 
 namespace GUI.ViewModels
 {

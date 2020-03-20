@@ -4,9 +4,8 @@ using ReactiveUI;
 using Model;
 using System.Linq;
 using System.Collections.Generic;
-using System.Reactive;
 
-namespace GUI.ViewModels
+namespace GUI.ViewModels.Components
 {
 	public class ComponentViewModel : ViewModelBase
 	{

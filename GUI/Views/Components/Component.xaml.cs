@@ -5,6 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using GUI.ViewModels;
+using GUI.ViewModels.Components;
 using GUI.Views.Infinite;
 using Model;
 using System;
