@@ -1,9 +1,10 @@
-using Avalonia;
+﻿using Avalonia;
 using System;
 using ReactiveUI;
 using Model;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reactive;
 
 namespace GUI.ViewModels
 {
@@ -44,6 +45,8 @@ namespace GUI.ViewModels
 		public IEnumerable<SignalViewModel> InputSignals => inputSignals;
 		public IEnumerable<SignalViewModel> OutputSignals => outputSignals;
 
+		public event EventHandler<ConnectEvent> Connect;
+
 		public ComponentViewModel(Component model)
 		{
 			this.model = model ?? throw new ArgumentNullException(nameof(model));
@@ -69,11 +72,25 @@ namespace GUI.ViewModels
 
 		public void InputSignalTapped(SignalViewModel signal)
 		{
-			throw new NotImplementedException();
+			Connect?.Invoke(this, new ConnectEvent(model, signal.Index, true));
 		}
 		public void OutputSignalTapped(SignalViewModel signal)
 		{
-			throw new NotImplementedException();
+			Connect?.Invoke(this, new ConnectEvent(model, signal.Index, false));
+		}
+	}
+
+	public readonly struct ConnectEvent
+	{
+		public Component Component { get; }
+		public int Index { get; }
+		public bool IsInputSide { get; }
+
+		public ConnectEvent(Component component, int index, bool isInputSide)
+		{
+			Component = component ?? throw new ArgumentNullException(nameof(component));
+			Index = index;
+			IsInputSide = isInputSide;
 		}
 	}
 }
