@@ -4,5 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="40" d:DesignHeight="40"
              x:Class="GUI.Views.Components.InputComponent">
-	<ToggleButton IsChecked="{Binding State, Mode=TwoWay}"/>
+	<UserControl.Styles>
+		<Style Selector="ToggleButton > Grid">
+			<Setter Property="Background" Value="#FF0000"/>
+		</Style>
+		<Style Selector="ToggleButton[IsChecked=true] > Grid">
+			<Setter Property="Background" Value="#00FF00"/>
+		</Style>
+		<Style Selector="ToggleButton:pointerover > Grid">
+			<Setter Property="Background" Value="#BB0000"/>
+		</Style>
+		<Style Selector="ToggleButton:pointerover[IsChecked=true] > Grid">
+			<Setter Property="Background" Value="#00BB00"/>
+		</Style>
+	</UserControl.Styles>
+	<ToggleButton IsChecked="{Binding State, Mode=TwoWay}" Margin="0" Padding="0"
+				  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+		<Grid>
+			<TextBlock Text="i" FontSize="14" FontWeight="SemiBold" Margin="0"
+					   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		</Grid>
+	</ToggleButton>
 </UserControl>
