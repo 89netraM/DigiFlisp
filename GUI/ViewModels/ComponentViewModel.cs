@@ -13,6 +13,7 @@ namespace GUI.ViewModels
 		private readonly Component model;
 
 		public string Id => model.Id;
+		public string TypeId => model.TypeId;
 
 		public Point Position
 		{

@@ -16,7 +16,7 @@
 		</ResourceDictionary>
 	</vi:InfiniteCanvasBlock.Resources>
 	<Grid RowDefinitions="10,*,10" ColumnDefinitions="10,*,10">
-		<Border BorderBrush="Black" BorderThickness="5" Child="{Binding Content, Mode=OneWay}" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
+		<Border x:Name="contentPresenter" BorderBrush="Black" BorderThickness="5" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
 
 		<ScrollViewer Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"
 					  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">

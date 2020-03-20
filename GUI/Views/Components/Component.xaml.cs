@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls.Shapes;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
 using Avalonia.Data.Converters;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -15,9 +16,19 @@ namespace GUI.Views.Components
 {
 	public class Component : InfiniteCanvasBlock
 	{
+		private readonly Decorator contentPresenter;
+
+		public new IControl Content
+		{
+			get => contentPresenter.Child;
+			set => contentPresenter.Child = value;
+		}
+
 		public Component()
 		{
 			this.InitializeComponent();
+
+			contentPresenter = this.FindControl<Decorator>("contentPresenter");
 		}
 
 		private void InitializeComponent()

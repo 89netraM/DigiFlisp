@@ -1,4 +1,5 @@
 ﻿using GUI.ViewModels;
+using GUI.Views.Components;
 using GUI.Views.Infinite;
 using System;
 using System.Collections.Generic;
@@ -57,12 +58,7 @@ namespace GUI.Views
 
 		private void AddComponent(ComponentViewModel component)
 		{
-			Components.Component block = new Components.Component()
-			{
-				DataContext = component
-			};
-
-			Children.Add(block);
+			Children.Add(ComponentFactory.Create(component));
 		}
 
 		private void RemoveComponent(ComponentViewModel component)
