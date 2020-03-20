@@ -1,5 +1,6 @@
 ﻿using Model;
 using ReactiveUI;
+using System;
 
 namespace GUI.ViewModels
 {
@@ -13,14 +14,29 @@ namespace GUI.ViewModels
 			get => signal;
 			set
 			{
+				if (signal is object)
+				{
+					signal.ValueChange -= Signal_ValueChange;
+				}
+
 				this.RaiseAndSetIfChanged(ref signal, value);
+
+				if (signal is object)
+				{
+					signal.ValueChange += Signal_ValueChange;
+				}
 			}
 		}
 
 		public SignalViewModel(int index, Signal signal)
 		{
 			Index = index;
-			this.signal = signal;
+			Signal = signal;
+		}
+
+		private void Signal_ValueChange(object sender, EventArgs e)
+		{
+			this.RaisePropertyChanged(nameof(Signal));
 		}
 	}
 }
