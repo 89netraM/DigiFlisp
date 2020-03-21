@@ -1,4 +1,4 @@
-using GUI.ViewModels.Components;
+﻿using GUI.ViewModels.Components;
 using Model;
 using System;
 using System.Collections.ObjectModel;
@@ -20,11 +20,11 @@ namespace GUI.ViewModels
 			Name = name;
 			this.blueprint = blueprint;
 			this.blueprint.ComponentEvent += Blueprint_ComponentEvent;
+		}
 
-			var a = new Model.Components.AndGate("and", 2);
-			a.Position.X = a.Position.Y = 5;
-			this.blueprint.AddComponent(a);
-			this.blueprint.AddComponent(new Model.Components.NotGate("not"));
+		public void AddComponent(string typeId)
+		{
+			blueprint.AddComponent(Model.Components.ComponentFactory.CreateComponent(typeId));
 		}
 
 		private void Blueprint_ComponentEvent(object sender, ComponentEventArg e)

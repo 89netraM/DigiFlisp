@@ -41,18 +41,24 @@ namespace GUI.Views
 
 		private void Components_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			foreach (var item in e.OldItems)
+			if (e.OldItems is object)
 			{
-				if (item is ComponentViewModel component)
+				foreach (var item in e.OldItems)
 				{
-					RemoveComponent(component);
+					if (item is ComponentViewModel component)
+					{
+						RemoveComponent(component);
+					}
 				}
 			}
-			foreach (var item in e.NewItems)
+			if (e.NewItems is object)
 			{
-				if (item is ComponentViewModel component)
+				foreach (var item in e.NewItems)
 				{
-					AddComponent(component);
+					if (item is ComponentViewModel component)
+					{
+						AddComponent(component);
+					}
 				}
 			}
 		}

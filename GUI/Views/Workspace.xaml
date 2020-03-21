@@ -10,7 +10,7 @@
 		<vm:WorkspaceViewModel/>
 	</Design.DataContext>
 
-	<TabControl Items="{Binding Items}">
+	<TabControl Items="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
 		<TabControl.ItemTemplate>
 			<DataTemplate>
 				<TextBlock Text="{Binding Name}"/>

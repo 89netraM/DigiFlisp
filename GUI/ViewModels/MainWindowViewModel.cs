@@ -58,9 +58,9 @@ namespace GUI.ViewModels
 			CloseAction?.Invoke();
 		}
 
-		private void ComponentList_AddComponent(object sender, string e)
+		private void ComponentList_AddComponent(object sender, string typeId)
 		{
-			throw new NotImplementedException();
+			Workspace?.AddComponent(typeId);
 		}
 	}
 }
