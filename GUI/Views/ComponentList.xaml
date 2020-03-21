@@ -3,12 +3,45 @@
 			 xmlns:vm="clr-namespace:GUI.ViewModels;assembly=GUI"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:local="clr-namespace:GUI.Views;assembly=GUI"
              mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="450"
              x:Class="GUI.Views.ComponentList">
 	<Design.DataContext>
 		<vm:ComponentListViewModel/>
 	</Design.DataContext>
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<local:CapitalizationConverter x:Key="CapitalizationConverter"/>
+		</ResourceDictionary>
+	</UserControl.Resources>
 
-	<ScrollViewer/>
+	<ScrollViewer HorizontalScrollBarVisibility="Disabled">
+		<StackPanel Margin="5,0">
+			<TextBlock Text="Standard Components" FontSize="20" Margin="0,0,0,5"/>
+			<ItemsRepeater Items="{Binding StandardComponents}" HorizontalAlignment="Stretch">
+				<ItemsRepeater.Layout>
+					<UniformGridLayout ItemsStretch="Fill" ItemsJustification="SpaceBetween" MinRowSpacing="5"/>
+				</ItemsRepeater.Layout>
+				<ItemsRepeater.ItemTemplate>
+					<DataTemplate>
+						<Button Content="{Binding Converter={StaticResource CapitalizationConverter}}" Width="117.5"
+								Command="{Binding $parent[UserControl].DataContext.AddComponentCommand}" CommandParameter="{Binding}"/>
+					</DataTemplate>
+				</ItemsRepeater.ItemTemplate>
+			</ItemsRepeater>
+			<TextBlock Text="Custom Components" FontSize="20" Margin="0,10,0,5"/>
+			<ItemsRepeater Items="{Binding CustomComponents}" HorizontalAlignment="Stretch">
+				<ItemsRepeater.Layout>
+					<StackLayout Orientation="Vertical" Spacing="5"/>
+				</ItemsRepeater.Layout>
+				<ItemsRepeater.ItemTemplate>
+					<DataTemplate>
+						<Button Content="{Binding}"
+								Command="{Binding $parent[UserControl].DataContext.AddComponentCommand}" CommandParameter="{Binding}"/>
+					</DataTemplate>
+				</ItemsRepeater.ItemTemplate>
+			</ItemsRepeater>
+		</StackPanel>
+	</ScrollViewer>
 
 </UserControl>

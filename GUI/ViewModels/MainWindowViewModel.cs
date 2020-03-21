@@ -10,7 +10,21 @@ namespace GUI.ViewModels
 	public class MainWindowViewModel : ViewModelBase
 	{
 		public ComponentListViewModel ComponentList { get; }
-		public WorkspaceViewModel Workspace { get; }
+		private WorkspaceViewModel workspace;
+		public WorkspaceViewModel Workspace
+		{
+			get => workspace;
+			set
+			{
+				if (workspace != value)
+				{
+					workspace = value;
+					ComponentList.WorkspaceItems = workspace?.Items;
+
+					this.RaisePropertyChanged(nameof(Workspace));
+				}
+			}
+		}
 
 		public ReactiveCommand<Unit, Unit> NewCommand { get; }
 		public Func<string> NewAction { get; set; }
@@ -21,6 +35,7 @@ namespace GUI.ViewModels
 		public MainWindowViewModel()
 		{
 			ComponentList = new ComponentListViewModel();
+			ComponentList.AddComponent += ComponentList_AddComponent;
 			Workspace = new WorkspaceViewModel();
 
 			NewCommand = ReactiveCommand.Create(NewCommandAction);
@@ -41,6 +56,11 @@ namespace GUI.ViewModels
 		private void ExitCommandAction()
 		{
 			CloseAction?.Invoke();
+		}
+
+		private void ComponentList_AddComponent(object sender, string e)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
