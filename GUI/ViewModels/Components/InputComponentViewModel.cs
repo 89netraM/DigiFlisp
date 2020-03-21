@@ -1,7 +1,6 @@
 ﻿using Model;
 using Model.Components;
 using System;
-using System.Diagnostics;
 
 namespace GUI.ViewModels.Components
 {
@@ -12,11 +11,7 @@ namespace GUI.ViewModels.Components
 		public bool State
 		{
 			get => model.State;
-			set
-			{
-				Debug.WriteLine("Swap! " + value);
-				model.State = value;
-			}
+			set => model.State = value;
 		}
 
 		public InputComponentViewModel(Component model) : base(model)
