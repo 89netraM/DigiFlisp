@@ -10,7 +10,8 @@ namespace GUI.Views.Components
 		private static readonly Func<IControl> defaultCreator = () => new IconComponent();
 		private static readonly IReadOnlyDictionary<string, Func<IControl>> creatorDictionary = new Dictionary<string, Func<IControl>>
 		{
-			[Model.Components.InputComponent.InputTypeId] = () => new InputComponent()
+			[Model.Components.InputComponent.InputTypeId] = () => new InputComponent(),
+			[Model.Components.OutputComponent.OutputTypeId] = () => new OutputComponent()
 		};
 
 		public static Component Create(ComponentViewModel component)

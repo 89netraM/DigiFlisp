@@ -9,7 +9,8 @@ namespace GUI.ViewModels.Components
 		private static readonly Func<Component, ComponentViewModel> defaultCreator = m => new ComponentViewModel(m);
 		private static readonly IReadOnlyDictionary<string, Func<Component, ComponentViewModel>> creatorDictionary = new Dictionary<string, Func<Component, ComponentViewModel>>
 		{
-			[Model.Components.InputComponent.InputTypeId] = m => new InputComponentViewModel(m)
+			[Model.Components.InputComponent.InputTypeId] = m => new InputComponentViewModel(m),
+			[Model.Components.OutputComponent.OutputTypeId] = m => new OutputComponentViewModel(m)
 		};
 
 		public static ComponentViewModel Create(Component component)
