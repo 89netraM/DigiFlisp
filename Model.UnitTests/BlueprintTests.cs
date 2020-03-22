@@ -162,7 +162,7 @@ namespace Model.UnitTests
 			AddingComponents();
 			ConnectComponents();
 
-			blueprint.Disconnect(notA, 0, notB, 0);
+			blueprint.Disconnect(notB, 0);
 
 			inComponent.State = true;
 			Assert.IsTrue(notC.OutputSignals[0].Value);
@@ -189,7 +189,7 @@ namespace Model.UnitTests
 				hasEventListenerBeenInvoked = true;
 			};
 
-			blueprint.Disconnect(fromComponenet, fromIndex, toComponenet, toIndex);
+			blueprint.Disconnect(toComponenet, toIndex);
 
 			Assert.IsTrue(hasEventListenerBeenInvoked);
 		}

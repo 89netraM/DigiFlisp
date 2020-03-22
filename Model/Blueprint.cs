@@ -74,29 +74,30 @@ namespace Model
 			ConnectionEvent?.Invoke(this, (fromComponent, fromIndex, toComponent, toIndex, true));
 		}
 
-		public void Disconnect(Component fromComponent, int fromIndex, Component toComponent, int toIndex)
+		public void Disconnect(Component component, int index)
 		{
-			if (!componentList.ContainsKey(fromComponent.Id))
+			if (!componentList.ContainsKey(component.Id))
 			{
-				throw new ArgumentException(nameof(fromComponent), "Can't remove a connection between two components unless both are included in this Blueprint.");
-			}
-			if (!componentList.ContainsKey(toComponent.Id))
-			{
-				throw new ArgumentException(nameof(toComponent), "Can't remove a connection between two components unless both are included in this Blueprint.");
+				throw new ArgumentException(nameof(component), "Can't remove a connection between two components unless both are included in this Blueprint.");
 			}
 
-			if (fromComponent.OutputSignals.Count <= fromIndex)
+			if (component.InputSignals.Count <= index)
 			{
-				throw new ArgumentOutOfRangeException(nameof(fromComponent), "Can't remove a connection from a Signal on an index out of range.");
-			}
-			if (toComponent.InputSignals.Count <= toIndex)
-			{
-				throw new ArgumentOutOfRangeException(nameof(toComponent), "Can't remove a connection to a Signal on an index out of range.");
+				throw new ArgumentOutOfRangeException(nameof(component), "Can't remove a connection to a Signal on an index out of range.");
 			}
 
-			toComponent.SetInput(toIndex, null);
+			if (!(component.InputSignals[index] is object))
+			{
+				throw new ArgumentException(nameof(index), "Can't dissconnect a Signal that isn't connected to anything.");
+			}
 
-			ConnectionEvent?.Invoke(this, (fromComponent, fromIndex, toComponent, toIndex, false));
+			Component fromComponent = GetComponent(component.InputSignals[index].OwnerId);
+			// IReadOnlyList dosn't have IndexOf 😢
+			int fromIndex = fromComponent.OutputSignals.Zip(Enumerable.Range(0, fromComponent.OutputSignals.Count)).First(x => x.First == component.InputSignals[index]).Second;
+
+			component.SetInput(index, null);
+
+			ConnectionEvent?.Invoke(this, (fromComponent, fromIndex, component, index, false));
 		}
 
 		public IReadOnlyCollection<Connection> IncomingConnectionsFor(Component component)
@@ -146,8 +147,6 @@ namespace Model
 			foreach (Connection connection in IncomingConnectionsFor(component))
 			{
 				Disconnect(
-					connection.Other,
-					connection.FromIndex,
 					component,
 					connection.ToIndex
 				);
@@ -156,8 +155,6 @@ namespace Model
 			foreach (Connection connection in OutgoingConnectionsFor(component))
 			{
 				Disconnect(
-					component,
-					connection.FromIndex,
 					connection.Other,
 					connection.ToIndex
 				);
