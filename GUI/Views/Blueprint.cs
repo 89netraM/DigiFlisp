@@ -1,4 +1,6 @@
-﻿using GUI.ViewModels;
+﻿using Avalonia.Input;
+using Avalonia.Interactivity;
+using GUI.ViewModels;
 using GUI.ViewModels.Components;
 using GUI.Views.Components;
 using GUI.Views.Infinite;
@@ -16,6 +18,9 @@ namespace GUI.Views
 		public Blueprint()
 		{
 			DataContextChanged += Blueprint_DataContextChanged;
+
+			KeyDown += Blueprint_KeyDown;
+			Tapped += Blueprint_Tapped;
 		}
 
 		private void Blueprint_DataContextChanged(object sender, EventArgs e)
@@ -60,6 +65,22 @@ namespace GUI.Views
 						AddComponent(component);
 					}
 				}
+			}
+		}
+
+		private void Blueprint_Tapped(object sender, RoutedEventArgs e)
+		{
+			if (e.Source == this)
+			{
+				model.CancelConnectionCommand.Execute().Subscribe();
+			}
+		}
+
+		private void Blueprint_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Escape)
+			{
+				model.CancelConnectionCommand.Execute().Subscribe();
 			}
 		}
 

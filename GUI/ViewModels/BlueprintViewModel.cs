@@ -1,8 +1,10 @@
 ﻿using GUI.ViewModels.Components;
 using Model;
+using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 
 namespace GUI.ViewModels
 {
@@ -13,6 +15,9 @@ namespace GUI.ViewModels
 
 		public ObservableCollection<ComponentViewModel> Components { get; }
 
+		public ReactiveCommand<Unit, Unit> CancelConnectionCommand { get; }
+		private ConnectEvent? connectionStart = null;
+
 		public BlueprintViewModel(string name, Blueprint blueprint)
 		{
 			Components = new ObservableCollection<ComponentViewModel>();
@@ -20,6 +25,8 @@ namespace GUI.ViewModels
 			Name = name;
 			this.blueprint = blueprint;
 			this.blueprint.ComponentEvent += Blueprint_ComponentEvent;
+
+			CancelConnectionCommand = ReactiveCommand.Create(CancelConnectionAction);
 		}
 
 		public void AddComponent(string typeId)
@@ -45,7 +52,36 @@ namespace GUI.ViewModels
 
 		private void Component_Connect(object sender, ConnectEvent e)
 		{
-			throw new NotImplementedException();
+			if (connectionStart is ConnectEvent s)
+			{
+				if (!s.Equals(e) && s.IsInputSide != e.IsInputSide)
+				{
+					if (s.IsInputSide)
+					{
+						blueprint.Connect(e.Component, e.Index, s.Component, s.Index);
+					}
+					else
+					{
+						blueprint.Connect(s.Component, s.Index, e.Component, e.Index);
+					}
+				}
+
+				connectionStart = null;
+			}
+			else
+			{
+				if (e.IsInputSide && e.Component.InputSignals[e.Index] is object)
+				{
+					blueprint.Disconnect(e.Component, e.Index);
+				}
+
+				connectionStart = e;
+			}
+		}
+
+		private void CancelConnectionAction()
+		{
+			connectionStart = null;
 		}
 	}
 }
