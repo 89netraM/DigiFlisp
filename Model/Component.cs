@@ -37,6 +37,7 @@ namespace Model
 			if (oldInput != input)
 			{
 				bool wasAdded = false;
+				inputSignals[index] = input;
 
 				if (oldInput != null)
 				{
@@ -45,7 +46,6 @@ namespace Model
 
 				if (input != null)
 				{
-					inputSignals[index] = input;
 					input.AddListener(Id + index, Update);
 
 					Update(new Stack<UpdateRecord>());
