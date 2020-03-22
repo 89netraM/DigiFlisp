@@ -65,6 +65,14 @@ namespace Model.UnitTests
 		}
 
 		[TestMethod]
+		public void GettingComponentsById()
+		{
+			AddingComponents();
+
+			Assert.AreSame(notA, blueprint.GetComponent(notA.Id));
+		}
+
+		[TestMethod]
 		public void RemovingComponents()
 		{
 			AddingComponents();

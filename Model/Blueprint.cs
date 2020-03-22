@@ -9,48 +9,53 @@ namespace Model
 		public event EventHandler<ConnectionEventArg> ConnectionEvent;
 		public event EventHandler<ComponentEventArg> ComponentEvent;
 
-		private readonly IList<Component> componentList = new List<Component>();
+		private readonly IDictionary<string, Component> componentList = new Dictionary<string, Component>();
 
 		public int ComponentCount => componentList.Count;
 
 		public Component GetComponent(int index)
 		{
-			return componentList[index];
+			return componentList.Values.ElementAt(index);
+		}
+
+		public Component GetComponent(string id)
+		{
+			return componentList[id];
 		}
 
 		public void AddComponent(Component component)
 		{
-			if (componentList.Contains(component))
+			if (componentList.ContainsKey(component.Id))
 			{
 				throw new ArgumentException(nameof(component), "Can't add a component that's already included in this component.");
 			}
 
-			componentList.Add(component);
+			componentList.Add(component.Id, component);
 
 			ComponentEvent?.Invoke(this, (component, true));
 		}
 
 		public void RemoveComponent(Component component)
 		{
-			if (!componentList.Contains(component))
+			if (!componentList.ContainsKey(component.Id))
 			{
 				throw new ArgumentException(nameof(component), "Can't remove a component unless it's included in this Blueprint.");
 			}
 
 			RemoveAllConnections(component);
 
-			componentList.Remove(component);
+			componentList.Remove(component.Id);
 
 			ComponentEvent?.Invoke(this, (component, false));
 		}
 
 		public void Connect(Component fromComponent, int fromIndex, Component toComponent, int toIndex)
 		{
-			if (!componentList.Contains(fromComponent))
+			if (!componentList.ContainsKey(fromComponent.Id))
 			{
 				throw new ArgumentException(nameof(fromComponent), "Can't make a connection between two components unless both are included in this Blueprint.");
 			}
-			if (!componentList.Contains(toComponent))
+			if (!componentList.ContainsKey(toComponent.Id))
 			{
 				throw new ArgumentException(nameof(toComponent), "Can't make a connection between two components unless both are included in this Blueprint.");
 			}
@@ -71,11 +76,11 @@ namespace Model
 
 		public void Disconnect(Component fromComponent, int fromIndex, Component toComponent, int toIndex)
 		{
-			if (!componentList.Contains(fromComponent))
+			if (!componentList.ContainsKey(fromComponent.Id))
 			{
 				throw new ArgumentException(nameof(fromComponent), "Can't remove a connection between two components unless both are included in this Blueprint.");
 			}
-			if (!componentList.Contains(toComponent))
+			if (!componentList.ContainsKey(toComponent.Id))
 			{
 				throw new ArgumentException(nameof(toComponent), "Can't remove a connection between two components unless both are included in this Blueprint.");
 			}
@@ -100,9 +105,9 @@ namespace Model
 
 			for (int i = 0; i < component.InputSignals.Count; i++)
 			{
-				Component connectingComponent = componentList.FirstOrDefault(x => x.Id == component.InputSignals[i]?.OwnerId);
-				if (connectingComponent != null)
+				if (component.InputSignals[i] is object)
 				{
+					Component connectingComponent = GetComponent(component.InputSignals[i].OwnerId);
 					connections.Add(new Connection(
 						connectingComponent,
 						component.InputSignals[i].Index,
@@ -117,7 +122,7 @@ namespace Model
 		{
 			List<Connection> connections = new List<Connection>();
 
-			foreach (Component other in componentList)
+			foreach (Component other in componentList.Values)
 			{
 				for (int i = 0; i < other.InputSignals.Count; i++)
 				{
@@ -133,7 +138,7 @@ namespace Model
 
 		public void RemoveAllConnections(Component component)
 		{
-			if (!componentList.Contains(component))
+			if (!componentList.ContainsKey(component.Id))
 			{
 				throw new ArgumentException(nameof(component), "Can't handle connections unless the component is included in this Blueprint.");
 			}
@@ -161,11 +166,11 @@ namespace Model
 
 		public void ReplaceComponent(Component oldComponent, Component newComponent)
 		{
-			if (!componentList.Contains(oldComponent))
+			if (!componentList.ContainsKey(oldComponent.Id))
 			{
 				throw new ArgumentException(nameof(oldComponent), "Can't remove a component unless it's included in this Blueprint.");
 			}
-			if (componentList.Contains(newComponent))
+			if (componentList.ContainsKey(newComponent.Id))
 			{
 				throw new ArgumentException(nameof(newComponent), "Can't add a component that's already included in this component.");
 			}
