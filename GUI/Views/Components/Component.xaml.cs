@@ -11,6 +11,7 @@ using Model;
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace GUI.Views.Components
@@ -25,16 +26,31 @@ namespace GUI.Views.Components
 			set => contentPresenter.Child = value;
 		}
 
+		private readonly ItemsRepeater inputSignals;
+		private readonly ItemsRepeater outputSignals;
+
 		public Component()
 		{
 			this.InitializeComponent();
 
 			contentPresenter = this.FindControl<Decorator>("contentPresenter");
+
+			inputSignals = this.FindControl<ItemsRepeater>("inputSignals");
+			outputSignals = this.FindControl<ItemsRepeater>("outputSignals");
 		}
 
 		private void InitializeComponent()
 		{
 			AvaloniaXamlLoader.Load(this);
+		}
+
+		public IControl GetInputSignal(int index)
+		{
+			return inputSignals.Children.FirstOrDefault(x => x is Control c && c.Tag is SignalViewModel s && s.Index == index);
+		}
+		public IControl GetOutputSignal(int index)
+		{
+			return outputSignals.Children.FirstOrDefault(x => x is Control c && c.Tag is SignalViewModel s && s.Index == index);
 		}
 
 		private void InputTapped(object sender, RoutedEventArgs e)

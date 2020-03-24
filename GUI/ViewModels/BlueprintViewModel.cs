@@ -18,6 +18,8 @@ namespace GUI.ViewModels
 		public ReactiveCommand<Unit, Unit> CancelConnectionCommand { get; }
 		private ConnectEvent? connectionStart = null;
 
+		public ObservableCollection<ConnectionViewModel> Connections { get; }
+
 		public BlueprintViewModel(string name, Blueprint blueprint)
 		{
 			Components = new ObservableCollection<ComponentViewModel>();
@@ -25,8 +27,24 @@ namespace GUI.ViewModels
 			Name = name;
 			this.blueprint = blueprint;
 			this.blueprint.ComponentEvent += Blueprint_ComponentEvent;
+			this.blueprint.ConnectionEvent += Blueprint_ConnectionEvent;
 
 			CancelConnectionCommand = ReactiveCommand.Create(CancelConnectionAction);
+			Connections = new ObservableCollection<ConnectionViewModel>();
+		}
+
+		private void Blueprint_ConnectionEvent(object sender, ConnectionEventArg e)
+		{
+			ConnectionViewModel connection = new ConnectionViewModel(e.FromComponent.Id, e.FromIndex, e.ToComponent.Id, e.ToIndex);
+
+			if (e.Connected)
+			{
+				Connections.Add(connection);
+			}
+			else
+			{
+				Connections.Remove(connection);
+			}
 		}
 
 		public void AddComponent(string typeId)

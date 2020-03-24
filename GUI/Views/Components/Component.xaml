@@ -20,8 +20,8 @@
 
 		<ScrollViewer Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"
 					  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
-			<ItemsRepeater Items="{Binding InputSignals}" Control.Tapped="InputTapped"
-						   ItemTemplate="{StaticResource SignalTemplate}">
+			<ItemsRepeater x:Name="inputSignals" Control.Tapped="InputTapped"
+						   Items="{Binding InputSignals}" ItemTemplate="{StaticResource SignalTemplate}">
 				<ItemsRepeater.Layout>
 					<StackLayout Orientation="Vertical" Spacing="10"/>
 				</ItemsRepeater.Layout>
@@ -30,8 +30,8 @@
 
 		<ScrollViewer Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right"
 					  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
-			<ItemsRepeater Items="{Binding OutputSignals}" Control.Tapped="OutputTapped"
-						   ItemTemplate="{StaticResource SignalTemplate}">
+			<ItemsRepeater x:Name="outputSignals" Control.Tapped="OutputTapped"
+						   Items="{Binding OutputSignals}" ItemTemplate="{StaticResource SignalTemplate}">
 				<ItemsRepeater.Layout>
 					<StackLayout Orientation="Vertical" Spacing="10"/>
 				</ItemsRepeater.Layout>
