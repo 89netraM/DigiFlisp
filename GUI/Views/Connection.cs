@@ -41,8 +41,8 @@ namespace GUI.Views
 
 		public void Layout()
 		{
-			StartPoint = from.TranslatePoint(from.Bounds.Center, parent) ?? new Point();
-			EndPoint = to.TranslatePoint(to.Bounds.Center, parent) ?? new Point();
+			StartPoint = parent.PointToClient(from.PointToScreen(new Point(from.Width / 2.0d, from.Height / 2.0d)));
+			EndPoint = parent.PointToClient(to.PointToScreen(new Point(to.Width / 2.0d, to.Height / 2.0d)));
 		}
 	}
 }
