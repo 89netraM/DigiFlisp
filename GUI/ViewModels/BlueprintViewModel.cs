@@ -2,6 +2,7 @@
 using Model;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
@@ -28,6 +29,21 @@ namespace GUI.ViewModels
 			this.blueprint = blueprint;
 			this.blueprint.ComponentEvent += Blueprint_ComponentEvent;
 			this.blueprint.ConnectionEvent += Blueprint_ConnectionEvent;
+
+			for (int i = 0; i < this.blueprint.ComponentCount; i++)
+			{
+				AddComponentViewModel(this.blueprint.GetComponent(i));
+			}
+			for (int i = 0; i < this.blueprint.ComponentCount; i++)
+			{
+				Component from = this.blueprint.GetComponent(i);
+				IReadOnlyCollection<Connection> connections = this.blueprint.OutgoingConnectionsFor(from);
+				foreach (Connection connection in connections)
+				{
+					Connections.Add(new ConnectionViewModel(from.Id, connection.FromIndex, connection.Other.Id, connection.ToIndex));
+				}
+			}
+
 
 			CancelConnectionCommand = ReactiveCommand.Create(CancelConnectionAction);
 			Connections = new ObservableCollection<ConnectionViewModel>();
@@ -56,9 +72,7 @@ namespace GUI.ViewModels
 		{
 			if (e.Added)
 			{
-				ComponentViewModel c = ComponentFactory.Create(e.AffectedComponent);
-				c.Connect += Component_Connect;
-				Components.Add(c);
+				AddComponentViewModel(e.AffectedComponent);
 			}
 			else
 			{
@@ -66,6 +80,13 @@ namespace GUI.ViewModels
 				c.Connect -= Component_Connect;
 				Components.Remove(c);
 			}
+		}
+
+		private void AddComponentViewModel(Component component)
+		{
+			ComponentViewModel c = ComponentFactory.Create(component);
+			c.Connect += Component_Connect;
+			Components.Add(c);
 		}
 
 		private void Component_Connect(object sender, ConnectEvent e)
