@@ -50,7 +50,7 @@ namespace GUI.Views.Infinite
 		private Point? lastPointerMove = null;
 
 		private int zoomPoint = zoomPointBase;
-		private double zoomFactor => zoomPoints[zoomPoint];
+		public double ZoomFactor => zoomPoints[zoomPoint];
 
 		public InfiniteCanvas()
 		{
@@ -92,13 +92,13 @@ namespace GUI.Views.Infinite
 
 		private void InfiniteCanvas_PointerWheelChanged(object sender, PointerWheelEventArgs e)
 		{
-			double zoomFactorBefore = zoomFactor;
+			double zoomFactorBefore = ZoomFactor;
 			Point offsetBefore = offset;
 			Point pointer = e.GetPosition(this);
 
 			zoomPoint = Math.Max(0, Math.Min(zoomPoint + (int)(e.Delta.Y / Math.Abs(e.Delta.Y)), zoomPoints.Length - 1));
 
-			offset = pointer - ((pointer - offsetBefore) * (zoomFactor / zoomFactorBefore));
+			offset = pointer - ((pointer - offsetBefore) * (ZoomFactor / zoomFactorBefore));
 
 			InvalidateArrange();
 		}
@@ -110,14 +110,14 @@ namespace GUI.Views.Infinite
 				if (child is InfiniteCanvasBlock childBlock)
 				{
 					Size originalSize = childBlock.Bounds.Size;
-					Size zoomedSize = originalSize * zoomFactor;
+					Size zoomedSize = originalSize * ZoomFactor;
 					Vector halfDimensions = new Vector(zoomedSize.Width - originalSize.Width, zoomedSize.Height - originalSize.Height) / 2.0d;
-					Point position = offset + GetPosition(childBlock) * coordinateSize * zoomFactor + halfDimensions;
+					Point position = offset + GetPosition(childBlock) * coordinateSize * ZoomFactor + halfDimensions;
 
 					Size size = GetSize(childBlock) * coordinateSize;
 
 					childBlock.Arrange(new Rect(position, size));
-					childBlock.Scale = zoomFactor;
+					childBlock.Scale = ZoomFactor;
 				}
 			}
 
