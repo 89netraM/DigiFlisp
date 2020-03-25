@@ -1,0 +1,20 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:GUI.Views"
+        mc:Ignorable="d" Width="290" Height="90"
+        x:Class="GUI.Views.TextDialog"
+		CanResize="False">
+	<Window.Resources>
+		<ResourceDictionary>
+			<local:TextToEnabledConverter x:Key="TextToEnabledConverter"/>
+		</ResourceDictionary>
+	</Window.Resources>
+	<StackPanel>
+		<TextBlock x:Name="DescriptionBlock" TextWrapping="Wrap" Margin="5"/>
+		<TextBox x:Name="TextBox" Margin="5,0"/>
+		<Button x:Name="AcceptButton" IsDefault="True" IsEnabled="{Binding #TextBox.Text, Converter={StaticResource TextToEnabledConverter}}"
+				Margin="5" HorizontalAlignment="Right"/>
+	</StackPanel>
+</Window>

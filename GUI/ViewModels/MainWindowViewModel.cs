@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GUI.ViewModels
 {
@@ -27,7 +28,7 @@ namespace GUI.ViewModels
 		}
 
 		public ReactiveCommand<Unit, Unit> NewCommand { get; }
-		public Func<string> NewAction { get; set; }
+		public Func<Task<string>> NewAction { get; set; }
 
 		public ReactiveCommand<Unit, Unit> ExitCommand { get; }
 		public Action CloseAction { get; set; }
@@ -43,9 +44,9 @@ namespace GUI.ViewModels
 			ExitCommand = ReactiveCommand.Create(ExitCommandAction);
 		}
 
-		private void NewCommandAction()
+		private async void NewCommandAction()
 		{
-			string newName = NewAction?.Invoke();
+			string newName = NewAction is object ? await NewAction.Invoke() : null;
 
 			if (newName != null)
 			{

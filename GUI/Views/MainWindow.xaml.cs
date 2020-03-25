@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using GUI.ViewModels;
 using System;
+using System.Threading.Tasks;
 
 namespace GUI.Views
 {
@@ -18,7 +19,7 @@ namespace GUI.Views
 			DataContext = new MainWindowViewModel
 			{
 				CloseAction = new Action(this.Close),
-				NewAction = new Func<string>(NewDialog)
+				NewAction = new Func<Task<string>>(NewDialog)
 			};
 		}
 
@@ -27,9 +28,16 @@ namespace GUI.Views
 			AvaloniaXamlLoader.Load(this);
 		}
 
-		private string NewDialog()
+		private async Task<string> NewDialog()
 		{
-			return DateTime.Now.ToString("HH:mm:ss");
+			TextDialog dialog = new TextDialog
+			{
+				Title = "Add New Blueprint",
+				Description = "Create a new blueprint with the following name:",
+				Placeholder = "Name",
+				AcceptPrompt = "Create"
+			};
+			return await dialog.ShowDialog<string>(this);
 		}
 	}
 }
