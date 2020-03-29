@@ -4,7 +4,8 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vc="clr-namespace:GUI.Views.Components;assembly=GUI"
 			 mc:Ignorable="d" d:DesignWidth="40" d:DesignHeight="40"
-			 x:Class="GUI.Views.Components.IconComponent">
+			 x:Class="GUI.Views.Components.IconComponent"
+			 Background="White">
 	<UserControl.Resources>
 		<ResourceDictionary>
 			<vc:TypeIdToSymbolConverter x:Key="TypeIdToSymbolConverter"/>
