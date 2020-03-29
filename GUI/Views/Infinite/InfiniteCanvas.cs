@@ -49,7 +49,7 @@ namespace GUI.Views.Infinite
 		protected Point offset = new Point(0, 0);
 		private Point? lastPointerMove = null;
 
-		private int zoomPoint = zoomPointBase;
+		protected int zoomPoint = zoomPointBase;
 		public double ZoomFactor => zoomPoints[zoomPoint];
 
 		public InfiniteCanvas()

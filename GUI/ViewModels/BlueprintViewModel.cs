@@ -1,4 +1,5 @@
-﻿using GUI.ViewModels.Components;
+﻿using Avalonia;
+using GUI.ViewModels.Components;
 using Model;
 using ReactiveUI;
 using System;
@@ -13,6 +14,9 @@ namespace GUI.ViewModels
 	{
 		public string Name { get; }
 		private readonly Blueprint blueprint;
+
+		public Point? Offset { get; set; } = null;
+		public int? ZoomPoint { get; set; } = null;
 
 		public ObservableCollection<ComponentViewModel> Components { get; }
 

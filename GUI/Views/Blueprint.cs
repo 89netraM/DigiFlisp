@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -32,6 +32,9 @@ namespace GUI.Views
 			{
 				model.Components.CollectionChanged -= Components_CollectionChanged;
 				model.Connections.CollectionChanged -= Connections_CollectionChanged;
+
+				model.Offset = offset;
+				model.ZoomPoint = zoomPoint;
 			}
 
 			model = DataContext as BlueprintViewModel;
@@ -41,6 +44,9 @@ namespace GUI.Views
 			{
 				model.Components.CollectionChanged += Components_CollectionChanged;
 				model.Connections.CollectionChanged += Connections_CollectionChanged;
+
+				offset = model.Offset ?? offset;
+				zoomPoint = model.ZoomPoint ?? zoomPoint;
 
 				foreach (var item in model.Components)
 				{
