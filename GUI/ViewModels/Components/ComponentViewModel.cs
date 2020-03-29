@@ -62,7 +62,10 @@ namespace GUI.ViewModels.Components
 
 		private void Position_ChangeEvent(object sender, PositionEvent e)
 		{
-			this.RaisePropertyChanged(nameof(Position));
+			if (new Point(model.Position.X, model.Position.Y) != Position)
+			{
+				this.RaisePropertyChanged(nameof(Position));
+			}
 		}
 
 		private void Model_InputSignalChanged(object sender, InputSignalChangeEvent e)

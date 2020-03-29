@@ -6,7 +6,7 @@
 					   xmlns:local="clr-namespace:GUI.Views.Components;assembly=GUI"
 					   mc:Ignorable="d" d:DesignWidth="50" d:DesignHeight="50"
 					   x:Class="GUI.Views.Components.Component"
-					   vi:InfiniteCanvas.Position="{Binding Position}" vi:InfiniteCanvas.Size="{Binding Size}">
+					   vi:InfiniteCanvas.Position="{Binding Position, Mode=TwoWay}" vi:InfiniteCanvas.Size="{Binding Size}">
 	<vi:InfiniteCanvasBlock.Resources>
 		<ResourceDictionary>
 			<local:SignalToColorConverter x:Key="SignalToColorConverter"/>
