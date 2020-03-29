@@ -32,18 +32,14 @@ namespace GUI.ViewModels
 
 			for (int i = 0; i < this.blueprint.ComponentCount; i++)
 			{
-				AddComponentViewModel(this.blueprint.GetComponent(i));
-			}
-			for (int i = 0; i < this.blueprint.ComponentCount; i++)
-			{
-				Component from = this.blueprint.GetComponent(i);
-				IReadOnlyCollection<Connection> connections = this.blueprint.OutgoingConnectionsFor(from);
+				Component component = this.blueprint.GetComponent(i);
+				AddComponentViewModel(component);
+				IReadOnlyCollection<Connection> connections = this.blueprint.OutgoingConnectionsFor(component);
 				foreach (Connection connection in connections)
 				{
-					Connections.Add(new ConnectionViewModel(from.Id, connection.FromIndex, connection.Other.Id, connection.ToIndex));
+					Connections.Add(new ConnectionViewModel(component.Id, connection.FromIndex, connection.Other.Id, connection.ToIndex));
 				}
 			}
-
 
 			CancelConnectionCommand = ReactiveCommand.Create(CancelConnectionAction);
 			Connections = new ObservableCollection<ConnectionViewModel>();

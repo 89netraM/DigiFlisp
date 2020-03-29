@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using GUI.ViewModels;
 using GUI.ViewModels.Components;
 using GUI.Views.Components;
@@ -45,10 +46,14 @@ namespace GUI.Views
 				{
 					AddComponent(item);
 				}
-				foreach (var item in model.Connections)
-				{
-					AddConnection(item);
-				}
+				Dispatcher.UIThread.InvokeAsync(() =>
+					{
+						foreach (var item in model.Connections)
+						{
+							AddConnection(item);
+						}
+					},
+					DispatcherPriority.Loaded);
 			}
 		}
 
@@ -128,14 +133,12 @@ namespace GUI.Views
 
 		private void AddConnection(ConnectionViewModel connection)
 		{
-			if (Children.FirstOrDefault(x => x.Name == connection.FromId) is Component fromComponent)
+			if (Children.FirstOrDefault(x => x.Name == connection.FromId) is Component fromComponent &&
+				fromComponent.GetOutputSignal(connection.FromIndex) is IControl from)
 			{
-				IControl from = fromComponent.GetOutputSignal(connection.FromIndex);
-
-				if (Children.FirstOrDefault(x => x.Name == connection.ToId) is Component toComponent)
+				if (Children.FirstOrDefault(x => x.Name == connection.ToId) is Component toComponent &&
+					toComponent.GetInputSignal(connection.ToIndex) is IControl to)
 				{
-					IControl to = toComponent.GetInputSignal(connection.ToIndex);
-
 					Children.Add(new Connection(this, from, to)
 					{
 						Name = connection.ToString()
