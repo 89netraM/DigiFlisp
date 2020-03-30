@@ -1,15 +1,21 @@
-﻿using Model;
+﻿using GUI.File;
+using Model;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace GUI.ViewModels
 {
 	public class WorkspaceViewModel : ViewModelBase
 	{
+		private readonly string path;
+
 		public ObservableCollection<BlueprintViewModel> Items { get; }
 		public int SelectedIndex { get; set; } = -1;
 
-		public WorkspaceViewModel()
+		public WorkspaceViewModel(string path)
 		{
+			this.path = path;
 			Items = new ObservableCollection<BlueprintViewModel>();
 		}
 
@@ -24,6 +30,11 @@ namespace GUI.ViewModels
 			{
 				Items[SelectedIndex].AddComponent(typeId);
 			}
+		}
+
+		public void SaveWorkspaceItems()
+		{
+			ReaderWriter.WriteAll(path, Items.Select(x => (x.Name, x.blueprint)));
 		}
 	}
 }

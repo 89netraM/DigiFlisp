@@ -19,7 +19,8 @@ namespace GUI.Views
 			DataContext = new MainWindowViewModel
 			{
 				CloseAction = new Action(this.Close),
-				NewAction = new Func<Task<string>>(NewDialog)
+				NewAction = new Func<Task<string>>(NewDialog),
+				OpenAction = new Func<Task<string>>(OpenDialog)
 			};
 		}
 
@@ -28,7 +29,7 @@ namespace GUI.Views
 			AvaloniaXamlLoader.Load(this);
 		}
 
-		private async Task<string> NewDialog()
+		private Task<string> NewDialog()
 		{
 			TextDialog dialog = new TextDialog
 			{
@@ -37,7 +38,16 @@ namespace GUI.Views
 				Placeholder = "Name",
 				AcceptPrompt = "Create"
 			};
-			return await dialog.ShowDialog<string>(this);
+			return dialog.ShowDialog<string>(this);
+		}
+
+		private Task<string> OpenDialog()
+		{
+			OpenFolderDialog dialog = new OpenFolderDialog
+			{
+				Title = "Open a Workspace"
+			};
+			return dialog.ShowAsync(this);
 		}
 	}
 }

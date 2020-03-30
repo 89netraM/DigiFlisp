@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using GUI.File;
+using Model;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,11 @@ namespace GUI.ViewModels
 		public ReactiveCommand<Unit, Unit> NewCommand { get; }
 		public Func<Task<string>> NewAction { get; set; }
 
+		public ReactiveCommand<Unit, Unit> OpenCommand { get; }
+		public Func<Task<string>> OpenAction { get; set; }
+
+		public ReactiveCommand<Unit, Unit> SaveCommand { get; }
+
 		public ReactiveCommand<Unit, Unit> ExitCommand { get; }
 		public Action CloseAction { get; set; }
 
@@ -37,9 +43,11 @@ namespace GUI.ViewModels
 		{
 			ComponentList = new ComponentListViewModel();
 			ComponentList.AddComponent += ComponentList_AddComponent;
-			Workspace = new WorkspaceViewModel();
 
 			NewCommand = ReactiveCommand.Create(NewCommandAction);
+
+			OpenCommand = ReactiveCommand.Create(OpenCommandAction);
+			SaveCommand = ReactiveCommand.Create(SaveCommandAction);
 
 			ExitCommand = ReactiveCommand.Create(ExitCommandAction);
 		}
@@ -50,8 +58,28 @@ namespace GUI.ViewModels
 
 			if (newName != null)
 			{
-				Workspace.AddWorkspaceItem(newName, new Blueprint());
+				Workspace?.AddWorkspaceItem(newName, new Blueprint());
 			}
+		}
+
+		private async void OpenCommandAction()
+		{
+			string folderPath = OpenAction is object ? await OpenAction.Invoke() : null;
+
+			if (folderPath != null)
+			{
+				Workspace = new WorkspaceViewModel(folderPath);
+
+				foreach ((string, Blueprint) item in await ReaderWriter.ReadAll(folderPath))
+				{
+					Workspace.AddWorkspaceItem(item.Item1, item.Item2);
+				}
+			}
+		}
+
+		private void SaveCommandAction()
+		{
+			Workspace?.SaveWorkspaceItems();
 		}
 
 		private void ExitCommandAction()

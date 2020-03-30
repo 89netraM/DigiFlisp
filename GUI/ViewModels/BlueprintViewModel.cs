@@ -13,7 +13,7 @@ namespace GUI.ViewModels
 	public class BlueprintViewModel
 	{
 		public string Name { get; }
-		private readonly Blueprint blueprint;
+		internal readonly Blueprint blueprint;
 
 		public Point? Offset { get; set; } = null;
 		public int? ZoomPoint { get; set; } = null;
@@ -28,6 +28,7 @@ namespace GUI.ViewModels
 		public BlueprintViewModel(string name, Blueprint blueprint)
 		{
 			Components = new ObservableCollection<ComponentViewModel>();
+			Connections = new ObservableCollection<ConnectionViewModel>();
 
 			Name = name;
 			this.blueprint = blueprint;
@@ -46,7 +47,6 @@ namespace GUI.ViewModels
 			}
 
 			CancelConnectionCommand = ReactiveCommand.Create(CancelConnectionAction);
-			Connections = new ObservableCollection<ConnectionViewModel>();
 		}
 
 		private void Blueprint_ConnectionEvent(object sender, ConnectionEventArg e)
