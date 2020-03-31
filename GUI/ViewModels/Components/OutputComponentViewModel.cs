@@ -11,7 +11,26 @@ namespace GUI.ViewModels.Components
 	{
 		private readonly OutputComponent model;
 
-		public Signal InputSignal { get; private set; }
+		private Signal inputSignal = null;
+		public Signal InputSignal
+		{
+			get => inputSignal;
+			private set
+			{
+				if (inputSignal is Signal)
+				{
+					inputSignal.ValueChange -= InputSignal_ValueChange;
+				}
+
+				inputSignal = value;
+				this.RaisePropertyChanged(nameof(InputSignal));
+
+				if (inputSignal is Signal)
+				{
+					inputSignal.ValueChange += InputSignal_ValueChange;
+				}
+			}
+		}
 
 		public OutputComponentViewModel(Component model) : base(model)
 		{
@@ -25,18 +44,7 @@ namespace GUI.ViewModels.Components
 		{
 			if (e.Index == 0)
 			{
-				if (InputSignal is Signal)
-				{
-					InputSignal.ValueChange -= InputSignal_ValueChange;
-				}
-
 				InputSignal = model.InputSignals[0];
-				this.RaisePropertyChanged(nameof(InputSignal));
-
-				if (InputSignal is Signal)
-				{
-					InputSignal.ValueChange += InputSignal_ValueChange;
-				}
 			}
 		}
 
