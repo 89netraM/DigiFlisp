@@ -30,6 +30,7 @@ namespace GUI.ViewModels
 				if (workspaceItems is object)
 				{
 					CustomComponents = new ObservableCollection<string>(workspaceItems.Select(x => x.Name));
+					this.RaisePropertyChanged(nameof(CustomComponents));
 					workspaceItems.CollectionChanged += WorkspaceItems_CollectionChanged;
 				}
 			}
