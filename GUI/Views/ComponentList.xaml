@@ -25,6 +25,7 @@
 				<ItemsRepeater.ItemTemplate>
 					<DataTemplate>
 						<Button Content="{Binding Converter={StaticResource CapitalizationConverter}}" Width="117.5"
+								IsEnabled="{Binding $parent[UserControl].DataContext.IsEnabled}"
 								Command="{Binding $parent[UserControl].DataContext.AddComponentCommand}" CommandParameter="{Binding}"/>
 					</DataTemplate>
 				</ItemsRepeater.ItemTemplate>
@@ -36,7 +37,7 @@
 				</ItemsRepeater.Layout>
 				<ItemsRepeater.ItemTemplate>
 					<DataTemplate>
-						<Button Content="{Binding}"
+						<Button Content="{Binding}" IsEnabled="{Binding $parent[UserControl].DataContext.IsEnabled}"
 								Command="{Binding $parent[UserControl].DataContext.AddComponentCommand}" CommandParameter="{Binding}"/>
 					</DataTemplate>
 				</ItemsRepeater.ItemTemplate>

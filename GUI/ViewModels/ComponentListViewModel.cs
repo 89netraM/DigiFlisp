@@ -37,6 +37,13 @@ namespace GUI.ViewModels
 		}
 		public ObservableCollection<string> CustomComponents { get; private set; }
 
+		private bool isEnabled = false;
+		public bool IsEnabled
+		{
+			get => isEnabled;
+			set => this.RaiseAndSetIfChanged(ref isEnabled, value);
+		}
+
 		public ReactiveCommand<string, Unit> AddComponentCommand { get; }
 		public event EventHandler<string> AddComponent;
 

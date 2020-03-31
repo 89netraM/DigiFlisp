@@ -3,6 +3,7 @@ using Model;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,9 +25,12 @@ namespace GUI.ViewModels
 					ComponentList.WorkspaceItems = workspace?.Items;
 
 					this.RaisePropertyChanged(nameof(Workspace));
+					this.RaisePropertyChanged(nameof(IsWorkspaceAvalible));
 				}
 			}
 		}
+
+		public bool IsWorkspaceAvalible => Workspace != null;
 
 		public ReactiveCommand<Unit, Unit> NewCommand { get; }
 		public Func<Task<string>> NewAction { get; set; }
@@ -50,6 +54,16 @@ namespace GUI.ViewModels
 			SaveCommand = ReactiveCommand.Create(SaveCommandAction);
 
 			ExitCommand = ReactiveCommand.Create(ExitCommandAction);
+
+			PropertyChanged += MainWindowViewModel_PropertyChanged;
+		}
+
+		private void MainWindowViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(IsWorkspaceAvalible))
+			{
+				ComponentList.IsEnabled = IsWorkspaceAvalible;
+			}
 		}
 
 		private async void NewCommandAction()

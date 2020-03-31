@@ -15,9 +15,9 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File">
-				<MenuItem Header="_New..." Command="{Binding NewCommand}"/>
+				<MenuItem Header="_New..." Command="{Binding NewCommand}" IsEnabled="{Binding IsWorkspaceAvalible}"/>
 				<MenuItem Header="_Open..." Command="{Binding OpenCommand}"/>
-				<MenuItem Header="_Save" Command="{Binding SaveCommand}"/>
+				<MenuItem Header="_Save" Command="{Binding SaveCommand}" IsEnabled="{Binding IsWorkspaceAvalible}"/>
 				<MenuItem Header="_Exit" Command="{Binding ExitCommand}"/>
 			</MenuItem>
 			<MenuItem Header="_Help">
