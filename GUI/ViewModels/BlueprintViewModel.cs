@@ -12,7 +12,7 @@ namespace GUI.ViewModels
 {
 	public class BlueprintViewModel
 	{
-		public string Name { get; }
+		public string Name => blueprint.Id;
 		internal readonly Blueprint blueprint;
 
 		public Point? Offset { get; set; } = null;
@@ -25,12 +25,11 @@ namespace GUI.ViewModels
 
 		public ObservableCollection<ConnectionViewModel> Connections { get; }
 
-		public BlueprintViewModel(string name, Blueprint blueprint)
+		public BlueprintViewModel(Blueprint blueprint)
 		{
 			Components = new ObservableCollection<ComponentViewModel>();
 			Connections = new ObservableCollection<ConnectionViewModel>();
 
-			Name = name;
 			this.blueprint = blueprint;
 			this.blueprint.ComponentEvent += Blueprint_ComponentEvent;
 			this.blueprint.ConnectionEvent += Blueprint_ConnectionEvent;

@@ -19,9 +19,9 @@ namespace GUI.ViewModels
 			Items = new ObservableCollection<BlueprintViewModel>();
 		}
 
-		public void AddWorkspaceItem(string name, Blueprint model)
+		public void AddWorkspaceItem(Blueprint model)
 		{
-			Items.Add(new BlueprintViewModel(name, model));
+			Items.Add(new BlueprintViewModel(model));
 		}
 
 		public void AddComponent(string typeId)
@@ -34,7 +34,7 @@ namespace GUI.ViewModels
 
 		public void SaveWorkspaceItems()
 		{
-			ReaderWriter.WriteAll(path, Items.Select(x => (x.Name, x.blueprint)));
+			ReaderWriter.WriteAll(path, Items.Select(x => x.blueprint));
 		}
 	}
 }

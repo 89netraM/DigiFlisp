@@ -28,9 +28,9 @@ namespace GUI.File
 			};
 		}
 
-		public static Blueprint FromJSON(BlueprintJSON blueprintJSON)
+		public static Blueprint FromJSON(BlueprintJSON blueprintJSON, string id)
 		{
-			Blueprint blueprint = new Blueprint();
+			Blueprint blueprint = new Blueprint(id);
 
 			foreach (KeyValuePair<string, ComponentJSON> item in blueprintJSON.Components)
 			{

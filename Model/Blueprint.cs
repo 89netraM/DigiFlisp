@@ -13,6 +13,13 @@ namespace Model
 
 		public int ComponentCount => componentList.Count;
 
+		public string Id { get; }
+
+		public Blueprint(string id)
+		{
+			Id = id ?? throw new ArgumentNullException(nameof(id));
+		}
+
 		public Component GetComponent(int index)
 		{
 			return componentList.Values.ElementAt(index);

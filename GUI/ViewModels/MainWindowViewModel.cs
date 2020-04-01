@@ -72,7 +72,7 @@ namespace GUI.ViewModels
 
 			if (newName != null)
 			{
-				Workspace?.AddWorkspaceItem(newName, new Blueprint());
+				Workspace?.AddWorkspaceItem(new Blueprint(newName));
 			}
 		}
 
@@ -84,9 +84,9 @@ namespace GUI.ViewModels
 			{
 				Workspace = new WorkspaceViewModel(folderPath);
 
-				foreach ((string, Blueprint) item in await ReaderWriter.ReadAll(folderPath))
+				foreach (Blueprint blueprint in await ReaderWriter.ReadAll(folderPath))
 				{
-					Workspace.AddWorkspaceItem(item.Item1, item.Item2);
+					Workspace.AddWorkspaceItem(blueprint);
 				}
 			}
 		}

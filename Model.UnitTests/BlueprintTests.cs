@@ -20,7 +20,7 @@ namespace Model.UnitTests
 		[TestInitialize]
 		public void Initialize()
 		{
-			blueprint = new Blueprint();
+			blueprint = new Blueprint("testBP");
 
 			inComponent = ComponentFactory.CreateComponent(InputComponent.InputTypeId) as InputComponent;
 
