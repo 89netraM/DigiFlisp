@@ -64,6 +64,14 @@ namespace Model.UnitTests
 			blueprint.AddComponent(notA);
 		}
 
+		[TestMethod, ExpectedException(typeof(Exception))]
+		public void AddingCustomComponentBasedOnItself()
+		{
+			Component customComponent = new CustomComponent("test", blueprint);
+
+			blueprint.AddComponent(customComponent);
+		}
+
 		[TestMethod]
 		public void GettingComponentsById()
 		{

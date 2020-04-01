@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,6 +36,11 @@ namespace Model
 			if (componentList.ContainsKey(component.Id))
 			{
 				throw new ArgumentException(nameof(component), "Can't add a component that's already included in this component.");
+			}
+
+			if (component is CustomComponent c && c.ContainsBlueprint(Id))
+			{
+				throw new Exception("A Blueprint can't contain a CustomComponent based on itself, directly or indirectly.");
 			}
 
 			componentList.Add(component.Id, component);
