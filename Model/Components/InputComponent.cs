@@ -22,7 +22,10 @@ namespace Model.Components
 			}
 		}
 
-		public InputComponent(string id) : base(id, InputTypeId, 0, 1) { }
+		public InputComponent(string id) : base(id, InputTypeId, 0, 1)
+		{
+			Initialize();
+		}
 
 		protected override IEnumerable<bool> Logic(IEnumerable<bool> inputValues)
 		{

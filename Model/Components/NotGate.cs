@@ -7,7 +7,10 @@ namespace Model.Components
 	{
 		public static readonly string NotTypeId = "NOT";
 
-		public NotGate(string id) : base(id, NotTypeId, 1, 1) { }
+		public NotGate(string id) : base(id, NotTypeId, 1, 1)
+		{
+			Initialize();
+		}
 
 		protected override IEnumerable<bool> Logic(IEnumerable<bool> inputValues)
 		{

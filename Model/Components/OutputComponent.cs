@@ -25,7 +25,10 @@ namespace Model.Components
 			}
 		}
 
-		public OutputComponent(string id) : base(id, OutputTypeId, 1, 0) { }
+		public OutputComponent(string id) : base(id, OutputTypeId, 1, 0)
+		{
+			Initialize();
+		}
 
 		protected override IEnumerable<bool> Logic(IEnumerable<bool> inputValues)
 		{

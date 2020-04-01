@@ -6,7 +6,10 @@ namespace Model.Components
 	{
 		public static readonly string AndTypeId = "AND";
 
-		public AndGate(string id, int inputSize) : base(id, AndTypeId, inputSize, 1) { }
+		public AndGate(string id, int inputSize) : base(id, AndTypeId, inputSize, 1)
+		{
+			Initialize();
+		}
 
 		protected override IEnumerable<bool> Logic(IEnumerable<bool> inputValues)
 		{

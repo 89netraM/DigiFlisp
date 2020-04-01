@@ -6,7 +6,10 @@ namespace Model.Components
 	{
 		public static readonly string OrTypeId = "OR";
 
-		public OrGate(string id, int inputSize) : base(id, OrTypeId, inputSize, 1) { }
+		public OrGate(string id, int inputSize) : base(id, OrTypeId, inputSize, 1)
+		{
+			Initialize();
+		}
 
 		protected override IEnumerable<bool> Logic(IEnumerable<bool> inputValues)
 		{

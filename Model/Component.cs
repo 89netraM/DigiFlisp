@@ -26,7 +26,10 @@ namespace Model
 
 			inputSignals = new Signal[inputSize];
 			outputSignals = (new Signal[outputSize]).Select((ignored, index) => new Signal(Id, index)).ToArray();
+		}
 
+		protected void Initialize()
+		{
 			Update(new Stack<UpdateRecord>());
 		}
 
