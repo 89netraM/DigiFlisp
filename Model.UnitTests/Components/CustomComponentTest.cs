@@ -93,5 +93,48 @@ namespace Model.UnitTests.Components
 			signal2.Update(true);
 			Assert.IsTrue(customComponent.OutputSignals[0].Value);
 		}
+
+		[TestMethod]
+		public void BlueprintCeption()
+		{
+			Blueprint bp = new Blueprint("testBP");
+
+			Component i1 = new InputComponent("B");
+			bp.AddComponent(i1);
+			Component i2 = new InputComponent("C");
+			bp.AddComponent(i2);
+			Component a = new AndGate("A", 2);
+			bp.AddComponent(a);
+			Component o = new OutputComponent("D");
+			bp.AddComponent(o);
+
+			bp.Connect(i1, 0, a, 0);
+			bp.Connect(i2, 0, a, 1);
+			bp.Connect(a, 0, o, 0);
+
+			Blueprint actualBp = new Blueprint("actualBp");
+
+			InputComponent input1 = new InputComponent("input1");
+			actualBp.AddComponent(input1);
+			InputComponent input2 = new InputComponent("input2");
+			actualBp.AddComponent(input2);
+			Component custom = ComponentFactory.CreateCustomComponent(bp);
+			actualBp.AddComponent(custom);
+			OutputComponent output = new OutputComponent("output");
+			actualBp.AddComponent(output);
+
+			actualBp.Connect(input1, 0, custom, 0);
+			actualBp.Connect(input2, 0, custom, 1);
+			actualBp.Connect(custom, 0, output, 0);
+
+			input1.State = true;
+			Assert.IsFalse(output.State);
+
+			input2.State = true;
+			Assert.IsTrue(output.State);
+
+			input1.State = false;
+			Assert.IsFalse(output.State);
+		}
 	}
 }

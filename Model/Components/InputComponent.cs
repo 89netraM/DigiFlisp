@@ -32,7 +32,7 @@ namespace Model.Components
 			return new bool[] { State };
 		}
 
-		public override Component Clone()
+		protected override Component InternalClone()
 		{
 			return new InputComponent(Id);
 		}

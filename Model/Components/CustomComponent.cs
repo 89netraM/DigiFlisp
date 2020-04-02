@@ -50,7 +50,7 @@ namespace Model.Components
 			}
 		}
 
-		public override Component Clone()
+		protected override Component InternalClone()
 		{
 			return new CustomComponent(Id, blueprint.Clone());
 		}

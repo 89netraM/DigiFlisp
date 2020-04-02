@@ -227,7 +227,7 @@ namespace Model
 				Component component = GetComponent(i);
 				foreach (Connection connection in OutgoingConnectionsFor(component))
 				{
-					clone.Connect(component, connection.FromIndex, connection.Other, connection.ToIndex);
+					clone.Connect(clone.GetComponent(component.Id), connection.FromIndex, clone.GetComponent(connection.Other.Id), connection.ToIndex);
 				}
 			}
 

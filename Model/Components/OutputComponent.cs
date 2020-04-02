@@ -37,7 +37,7 @@ namespace Model.Components
 			return Array.Empty<bool>();
 		}
 
-		public override Component Clone()
+		protected override Component InternalClone()
 		{
 			return new OutputComponent(Id);
 		}
