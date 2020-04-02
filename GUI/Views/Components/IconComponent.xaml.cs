@@ -24,6 +24,7 @@ namespace GUI.Views.Components
 
 	public class TypeIdToSymbolConverter : IValueConverter
 	{
+		private static readonly string defaultIcon = "?";
 		private static readonly IReadOnlyDictionary<string, string> typeIdIconPair = new Dictionary<string, string>
 		{
 			[AndGate.AndTypeId] = "&",
@@ -39,7 +40,7 @@ namespace GUI.Views.Components
 			}
 			else
 			{
-				throw new ArgumentException($"Can not convert ({value}) to an icon.", nameof(value));
+				return defaultIcon;
 			}
 		}
 

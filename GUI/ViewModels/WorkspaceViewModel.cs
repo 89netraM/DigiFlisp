@@ -28,7 +28,14 @@ namespace GUI.ViewModels
 		{
 			if (0 <= SelectedIndex && SelectedIndex < Items.Count)
 			{
-				Items[SelectedIndex].AddComponent(typeId);
+				try
+				{
+					Items[SelectedIndex].AddComponent(typeId);
+				}
+				catch
+				{
+					Items[SelectedIndex].AddCustomComponent(Items.First(x => x.Name == typeId).blueprint);
+				}
 			}
 		}
 

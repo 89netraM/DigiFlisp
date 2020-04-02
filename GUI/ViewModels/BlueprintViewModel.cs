@@ -66,6 +66,10 @@ namespace GUI.ViewModels
 		{
 			blueprint.AddComponent(Model.Components.ComponentFactory.CreateComponent(typeId));
 		}
+		public void AddCustomComponent(Blueprint customBlueprintModel)
+		{
+			blueprint.AddComponent(Model.Components.ComponentFactory.CreateCustomComponent(customBlueprintModel));
+		}
 
 		private void Blueprint_ComponentEvent(object sender, ComponentEventArg e)
 		{
