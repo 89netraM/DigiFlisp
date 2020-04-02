@@ -21,8 +21,18 @@ namespace GUI.ViewModels
 			{
 				if (workspace != value)
 				{
+					if (workspace is WorkspaceViewModel)
+					{
+						workspace.Error -= Workspace_Error;
+					}
+
 					workspace = value;
-					ComponentList.WorkspaceItems = workspace?.Items;
+
+					if (workspace is WorkspaceViewModel)
+					{
+						ComponentList.WorkspaceItems = workspace.Items;
+						workspace.Error += Workspace_Error;
+					}
 
 					this.RaisePropertyChanged(nameof(Workspace));
 					this.RaisePropertyChanged(nameof(IsWorkspaceAvalible));
@@ -42,6 +52,8 @@ namespace GUI.ViewModels
 
 		public ReactiveCommand<Unit, Unit> ExitCommand { get; }
 		public Action CloseAction { get; set; }
+
+		public Action<string> ErrorAction { get; set; }
 
 		public MainWindowViewModel()
 		{
@@ -104,6 +116,11 @@ namespace GUI.ViewModels
 		private void ComponentList_AddComponent(object sender, string typeId)
 		{
 			Workspace?.AddComponent(typeId);
+		}
+
+		private void Workspace_Error(object sender, Exception ex)
+		{
+			ErrorAction?.Invoke(ex.Message);
 		}
 	}
 }

@@ -20,7 +20,8 @@ namespace GUI.Views
 			{
 				CloseAction = new Action(this.Close),
 				NewAction = new Func<Task<string>>(NewDialog),
-				OpenAction = new Func<Task<string>>(OpenDialog)
+				OpenAction = new Func<Task<string>>(OpenDialog),
+				ErrorAction = new Action<string>(ErrorDialog)
 			};
 		}
 
@@ -48,6 +49,16 @@ namespace GUI.Views
 				Title = "Open a Workspace"
 			};
 			return dialog.ShowAsync(this);
+		}
+
+		private void ErrorDialog(string message)
+		{
+			ErrorDialog dialog = new ErrorDialog
+			{
+				Title = "An Error Occured",
+				Message = message
+			};
+			dialog.ShowDialog(this);
 		}
 	}
 }

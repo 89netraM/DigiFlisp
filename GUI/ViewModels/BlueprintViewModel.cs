@@ -10,7 +10,7 @@ using System.Reactive;
 
 namespace GUI.ViewModels
 {
-	public class BlueprintViewModel
+	public class BlueprintViewModel : IErrorProducer
 	{
 		public string Name => blueprint.Id;
 		internal readonly Blueprint blueprint;
@@ -22,6 +22,8 @@ namespace GUI.ViewModels
 
 		public ReactiveCommand<Unit, Unit> CancelConnectionCommand { get; }
 		private ConnectEvent? connectionStart = null;
+
+		public event EventHandler<Exception> Error;
 
 		public ObservableCollection<ConnectionViewModel> Connections { get; }
 
@@ -64,11 +66,22 @@ namespace GUI.ViewModels
 
 		public void AddComponent(string typeId)
 		{
-			blueprint.AddComponent(Model.Components.ComponentFactory.CreateComponent(typeId));
+			AddComponent(Model.Components.ComponentFactory.CreateComponent(typeId));
 		}
 		public void AddCustomComponent(Blueprint customBlueprintModel)
 		{
-			blueprint.AddComponent(Model.Components.ComponentFactory.CreateCustomComponent(customBlueprintModel));
+			AddComponent(Model.Components.ComponentFactory.CreateCustomComponent(customBlueprintModel));
+		}
+		private void AddComponent(Component component)
+		{
+			try
+			{
+				blueprint.AddComponent(component);
+			}
+			catch (Exception ex)
+			{
+				Error?.Invoke(this, ex);
+			}
 		}
 
 		private void Blueprint_ComponentEvent(object sender, ComponentEventArg e)
