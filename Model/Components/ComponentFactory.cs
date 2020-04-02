@@ -31,5 +31,14 @@ namespace Model.Components
 
 			return componentCreatorMethods[typeId].Invoke(id);
 		}
+
+		public static Component CreateCustomComponent(Blueprint blueprint)
+		{
+			return CreateCustomComponent(blueprint, Guid.NewGuid().ToString());
+		}
+		public static Component CreateCustomComponent(Blueprint blueprint, string id)
+		{
+			return new CustomComponent(id, blueprint.Clone());
+		}
 	}
 }
