@@ -36,5 +36,10 @@ namespace Model.Components
 
 			return Array.Empty<bool>();
 		}
+
+		public override Component Clone()
+		{
+			return new OutputComponent(Id);
+		}
 	}
 }

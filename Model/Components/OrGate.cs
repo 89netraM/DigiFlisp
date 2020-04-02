@@ -23,5 +23,10 @@ namespace Model.Components
 
 			return new bool[] { false };
 		}
+
+		public override Component Clone()
+		{
+			return new OrGate(Id, InputSignals.Count);
+		}
 	}
 }

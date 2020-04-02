@@ -212,6 +212,27 @@ namespace Model
 				);
 			}
 		}
+
+		public Blueprint Clone()
+		{
+			Blueprint clone = new Blueprint(Id);
+
+			for (int i = 0; i < ComponentCount; i++)
+			{
+				clone.AddComponent(GetComponent(i).Clone());
+			}
+
+			for (int i = 0; i < ComponentCount; i++)
+			{
+				Component component = GetComponent(i);
+				foreach (Connection connection in OutgoingConnectionsFor(component))
+				{
+					clone.Connect(component, connection.FromIndex, connection.Other, connection.ToIndex);
+				}
+			}
+
+			return clone;
+		}
 	}
 
 	public struct ConnectionEventArg

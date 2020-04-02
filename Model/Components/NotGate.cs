@@ -16,5 +16,10 @@ namespace Model.Components
 		{
 			return new bool[] { !inputValues.ElementAt(0) };
 		}
+
+		public override Component Clone()
+		{
+			return new NotGate(Id);
+		}
 	}
 }

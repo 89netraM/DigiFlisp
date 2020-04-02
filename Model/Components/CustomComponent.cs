@@ -50,6 +50,11 @@ namespace Model.Components
 			}
 		}
 
+		public override Component Clone()
+		{
+			return new CustomComponent(Id, blueprint.Clone());
+		}
+
 		public bool ContainsBlueprint(string blueprintId)
 		{
 			if (TypeId == blueprintId)

@@ -23,5 +23,10 @@ namespace Model.Components
 
 			return new bool[] { true };
 		}
+
+		public override Component Clone()
+		{
+			return new AndGate(Id, InputSignals.Count);
+		}
 	}
 }

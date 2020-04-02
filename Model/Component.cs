@@ -75,6 +75,8 @@ namespace Model
 		}
 
 		protected abstract IEnumerable<bool> Logic(IEnumerable<bool> inputValues);
+
+		public abstract Component Clone();
 	}
 
 	public readonly struct InputSignalChangeEvent

@@ -31,5 +31,10 @@ namespace Model.Components
 		{
 			return new bool[] { State };
 		}
+
+		public override Component Clone()
+		{
+			return new InputComponent(Id);
+		}
 	}
 }
