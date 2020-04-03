@@ -51,10 +51,10 @@ namespace Model
 				{
 					input.AddListener(Id + index, Update);
 
-					Update(new Stack<UpdateRecord>());
 					wasAdded = true;
 				}
 
+				Update(new Stack<UpdateRecord>());
 				InputSignalChanged?.Invoke(this, new InputSignalChangeEvent(index, wasAdded));
 			}
 		}

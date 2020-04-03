@@ -170,10 +170,14 @@ namespace Model.UnitTests
 			AddingComponents();
 			ConnectComponents();
 
+			inComponent.State = false;
+			Assert.IsTrue(notC.OutputSignals[0].Value);
+
 			blueprint.Disconnect(notB, 0);
 
+			Assert.IsFalse(notC.OutputSignals[0].Value);
 			inComponent.State = true;
-			Assert.IsTrue(notC.OutputSignals[0].Value);
+			Assert.IsFalse(notC.OutputSignals[0].Value);
 		}
 
 		[TestMethod]
