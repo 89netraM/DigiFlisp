@@ -4,4 +4,17 @@
 
 A *nicer* alternative to DigiFlisp
 
-Write in C#
+Written in C#
+
+## Showcase
+
+![Screenshot of the application GUI](./Showcase/Screenshot.png)
+
+Now with all the functionality from the Java clone.  
+Download it from the [releases tab](./releases).
+
+## TODO
+
+* [ ] GUI: Delete components
+* [ ] GUI: Replace components
+* [ ] Export to OG DigiFlisp file format
