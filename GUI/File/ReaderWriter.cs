@@ -41,24 +41,31 @@ namespace GUI.File
 			IList<string> paths = Directory.GetFiles(folderPath, $"*.{fileExtension}").ToList();
 			IDictionary<string, Blueprint> blueprints = new Dictionary<string, Blueprint>();
 
-			int i = 0;
-			while (paths.Count > 1)
+			if (paths.Count > 0)
 			{
-				try
+				int i = 0;
+				while (paths.Count > 1)
 				{
-					Blueprint blueprint = await Read(paths[i], blueprints);
+					try
+					{
+						Blueprint blueprint = await Read(paths[i], blueprints);
 
-					paths.RemoveAt(i);
-					blueprints.Add(blueprint.Id, blueprint);
-					i = 0;
+						paths.RemoveAt(i);
+						blueprints.Add(blueprint.Id, blueprint);
+						i = 0;
+					}
+					catch
+					{
+						i++;
+					}
 				}
-				catch
-				{
-					i++;
-				}
+
+				return blueprints.Values.Append(await Read(paths[0], blueprints));
 			}
-
-			return blueprints.Values.Append(await Read(paths[0], blueprints));
+			else
+			{
+				return Enumerable.Empty<Blueprint>();
+			}
 		}
 
 		private static string CreateFilePath(string folderPath, string fileName)
