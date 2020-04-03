@@ -28,13 +28,13 @@ namespace GUI.File
 			};
 		}
 
-		public static Blueprint FromJSON(BlueprintJSON blueprintJSON, string id)
+		public static Blueprint FromJSON(BlueprintJSON blueprintJSON, string id, IDictionary<string, Blueprint> blueprints)
 		{
 			Blueprint blueprint = new Blueprint(id);
 
 			foreach (KeyValuePair<string, ComponentJSON> item in blueprintJSON.Components)
 			{
-				blueprint.AddComponent(ComponentJSON.FromJSON(item.Value, item.Key));
+				blueprint.AddComponent(ComponentJSON.FromJSON(item.Value, item.Key, blueprints));
 			}
 
 			foreach (ConnectionJSON connectionJSON in blueprintJSON.Connections)

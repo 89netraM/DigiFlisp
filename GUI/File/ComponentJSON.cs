@@ -1,5 +1,7 @@
 ﻿using Model;
 using Model.Components;
+using System;
+using System.Collections.Generic;
 
 namespace GUI.File
 {
@@ -18,9 +20,26 @@ namespace GUI.File
 			};
 		}
 
-		public static Component FromJSON(ComponentJSON componentJSON, string id)
+		public static Component FromJSON(ComponentJSON componentJSON, string id, IDictionary<string, Blueprint> blueprints)
 		{
-			Component component = ComponentFactory.CreateComponent(componentJSON.TypeId, id);
+			Component component;
+			
+			try
+			{
+				component = ComponentFactory.CreateComponent(componentJSON.TypeId, id);
+			}
+			catch
+			{
+				try
+				{
+					component = ComponentFactory.CreateCustomComponent(blueprints[componentJSON.TypeId], id);
+				}
+				catch
+				{
+					throw new Exception($"Could not find Blueprint {componentJSON.TypeId} to create CustomComponent.");
+				}
+			}
+
 			component.Position.X = componentJSON.Position.X;
 			component.Position.Y = componentJSON.Position.Y;
 			return component;

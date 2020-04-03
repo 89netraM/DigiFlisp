@@ -26,20 +26,39 @@ namespace GUI.File
 			return Task.WhenAll(blueprints.Select(x => Write(x, folderPath)));
 		}
 
-		public static async Task<Blueprint> Read(string path)
+		public static async Task<Blueprint> Read(string path, IDictionary<string, Blueprint> blueprints)
 		{
 			using (Stream stream = System.IO.File.OpenRead(path))
 			{
 				BlueprintJSON blueprintJSON = await JsonSerializer.DeserializeAsync<BlueprintJSON>(stream);
 
-				return BlueprintJSON.FromJSON(blueprintJSON, Path.GetFileNameWithoutExtension(path));
+				return BlueprintJSON.FromJSON(blueprintJSON, Path.GetFileNameWithoutExtension(path), blueprints);
 			}
 		}
 
-		public static Task<IEnumerable<Blueprint>> ReadAll(string folderPath)
+		public static async Task<IEnumerable<Blueprint>> ReadAll(string folderPath)
 		{
-			return Task.WhenAll(Directory.GetFiles(folderPath, $"*.{fileExtension}").Select(x => Read(x)))
-				.ContinueWith<IEnumerable<Blueprint>>(t => t.Result);
+			IList<string> paths = Directory.GetFiles(folderPath, $"*.{fileExtension}").ToList();
+			IDictionary<string, Blueprint> blueprints = new Dictionary<string, Blueprint>();
+
+			int i = 0;
+			while (paths.Count > 1)
+			{
+				try
+				{
+					Blueprint blueprint = await Read(paths[i], blueprints);
+
+					paths.RemoveAt(i);
+					blueprints.Add(blueprint.Id, blueprint);
+					i = 0;
+				}
+				catch
+				{
+					i++;
+				}
+			}
+
+			return blueprints.Values.Append(await Read(paths[0], blueprints));
 		}
 
 		private static string CreateFilePath(string folderPath, string fileName)

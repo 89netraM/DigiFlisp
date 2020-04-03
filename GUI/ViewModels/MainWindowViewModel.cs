@@ -96,9 +96,16 @@ namespace GUI.ViewModels
 			{
 				Workspace = new WorkspaceViewModel(folderPath);
 
-				foreach (Blueprint blueprint in await ReaderWriter.ReadAll(folderPath))
+				try
 				{
-					Workspace.AddWorkspaceItem(blueprint);
+					foreach (Blueprint blueprint in await ReaderWriter.ReadAll(folderPath))
+					{
+						Workspace.AddWorkspaceItem(blueprint);
+					}
+				}
+				catch (Exception ex)
+				{
+					ErrorAction?.Invoke(ex.Message);
 				}
 			}
 		}
